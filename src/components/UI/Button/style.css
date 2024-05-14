@@ -1,0 +1,11 @@
+
+.custom-button{
+    color: white;
+    background-color: blueviolet;
+    border: 1px solid blueviolet!important;
+}
+.custom-button:hover{
+    background-color: white !important;
+    color: blueviolet!important;
+    
+}
