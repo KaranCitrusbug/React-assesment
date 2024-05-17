@@ -1,6 +1,9 @@
-import { ButtonProps } from "antd";
+import { ComponentPropsWithoutRef } from "react";
 
-export interface CustomButtonProps extends ButtonProps {
+export type CustomButtonProps={
+  isLoading?: boolean;
+  className: string;
+  type?: "button" | "submit" | "reset";
   buttonLabel: string;
-  
-}
+  id : string
+}& ComponentPropsWithoutRef<'button'>

@@ -1,0 +1,39 @@
+
+.signUp{
+    background-color: transparent;
+    margin: 10px;
+    padding: 50px;
+    border-radius: 8px;
+    max-width: 80%;
+}
+form{
+    display: flex;
+    gap: 10px;
+}
+
+.formField{
+    padding: 10% 10%;
+}
+.custom-button{
+    width: 100%;
+}
+.signUpImg{
+    mix-blend-mode:multiply;
+    object-fit: contain;
+}
+.react-tel-input .special-label{
+    position: relative !important;
+    top: 0px !important;
+    left: 0px!important;
+    background-color: inherit !important;
+    font-size: 16px !important;
+    margin-bottom: 5px!important;
+
+}
+.react-tel-input .form-control{
+    width: 100% !important;
+    padding: 6px 12px 6px 58px !important;
+}
+.react-tel-input .flag-dropdown{
+    top: 20px !important;
+}

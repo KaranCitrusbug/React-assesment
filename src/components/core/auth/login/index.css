@@ -1,0 +1,37 @@
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  background-color: #feeafa;
+}
+.LoginPage {
+  background-color: transparent;
+  margin: 10px;
+  padding: 50px;
+  border-radius: 8px;
+}
+.formField{
+  padding: 5% 10%;
+}
+form {
+  display: flex;
+  gap: 10px;
+}
+.custom-button {
+  width: 100%;
+}
+
+.loginImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  mix-blend-mode: darken;
+}
+a {
+  text-decoration: underline !important;
+}
+p {
+  margin: 0;
+}

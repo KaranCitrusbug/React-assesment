@@ -1,23 +1,23 @@
 import React,{ FC } from "react"
 import { CustomButtonProps } from "./Button.type"
-import { Button } from "antd"
+
 import './style.css'
 const CustomButton :FC<CustomButtonProps> = ({
   buttonLabel,
   className,
-  htmlType,
+  type,
   id,
-  ...restProps
+  ...props
 }) => {
   return (
-    <Button
-    htmlType={htmlType}
+    <button
+    type={type}
     className={`${className}`}
     id={`${id}`}
-    {...restProps}
+    {...props}
   >
     {buttonLabel}
-  </Button>
+  </button>
   )
 }
 

@@ -1,11 +1,12 @@
-
+import Routes from './routes/routes';
 import './App.css';
-import Auth from './pages/Auth';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
    <>
-    <Auth/>
+    <Routes/>
+    <ToastContainer position='bottom-right'/>         
    </>
   );
 }
