@@ -6,7 +6,9 @@ const HomePage= lazy(()=> import('../pages/Home/index'))
 const Login = lazy(()=> import('../pages/Auth/Login'))
 const SignUp = lazy(()=> import('../pages/Auth/signUp'))
 const PageNotFound =lazy(()=> import('../pages/PageNotFound/PageNotFound'))
-const cart =lazy(()=> import('../components/core/Cart/index'))
+const Cart =lazy(()=> import('../components/core/Cart/index'))
+const AddProduct =lazy(()=> import('../pages/Admin/Index'))
+const Blogs =lazy(()=>import("../pages/Blog/Index"))
 
 const RoutesPage:React.FC = () => {
   return (
@@ -16,8 +18,10 @@ const RoutesPage:React.FC = () => {
             <Route  path='/' Component={HomePage}></Route>
             <Route  path='/login' Component={Login}></Route>
             <Route  path='/signup' Component={SignUp}></Route>
-            <Route path='/cart' Component={cart}></Route>
+            <Route path='/cart' Component={Cart}></Route>
+            <Route path='/blog' Component={Blogs}></Route>
             <Route  path='*' Component={PageNotFound}></Route>
+            <Route path='/admin/add-product' Component={AddProduct}></Route>
           </Routes>
     </Suspense>
     </BrowserRouter>

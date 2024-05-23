@@ -37,13 +37,10 @@ h1 {
   flex-direction: column;
   background-color: #feeafa;
 }
-span{
+span.error{
   font-size: 12px;
   color: red;
 }
 p{
   margin: 0;
-}
-a{
-  text-decoration: none;
 }

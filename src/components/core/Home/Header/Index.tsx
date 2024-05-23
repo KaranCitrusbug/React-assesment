@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import Images from "../../../../assets/AllImages";
-import CustomButton from "../../../UI/Button/Button";
+
 import { auth } from "../../../../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+
+import Images from "../../../../assets/AllImages";
+import CustomButton from "../../../UI/Button/Button";
+
+import { HeartFilled, UserOutlined } from "@ant-design/icons";
+import type { MenuProps } from "antd";
+import { Dropdown, Space } from "antd";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  faMagnifyingGlass,
+  faCartShopping,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+
 import "./style.css";
+import { ConstValue } from "../../../../utils/ConstFile";
+
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -27,6 +41,38 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
     navigate("/login");
   };
 
+  const items: MenuProps["items"] = [    
+    {
+      key: "1",
+      label: (
+        <Link rel="noopener noreferrer" to="/" className="btn">
+          Change Password
+        </Link>
+      ),
+    },
+    // {
+    //   key: "2",
+    //   label: (
+    //     <Link rel="noopener noreferrer" to="/" className="btn">
+    //       <HeartFilled/>
+    //      Whish List
+    //     </Link>
+    //   ),
+    // },
+    {
+      key: "1",
+      label: (
+        <CustomButton
+          type="button"
+          className="btn"
+          buttonLabel={user !== null ? "Logout" : "Login"}
+          id="button"
+          onClick={user !== null ? handleSignOut : handleSignIn}
+        />
+      ),
+    },
+  ];
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -36,43 +82,66 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg  py-2">
+      <nav className="navbar navbar-expand-lg position-sticky top-0 z-3">
         <div className="container d-flex justify-content-between">
           <NavLink className="navbar-brand text-decoration-none" to="/">
-            <div className="logo d-flex justify-content-center">
+            <div className="logo d-flex justify-content-center align-center">
               <img
                 src={Images.Logo}
-                className="img-fluid"
+                className="img-fluid logo-img"
                 alt="Cloth Store Logo"
               />
             </div>
             <p className="title">ClothStore</p>
           </NavLink>
-          <div className=" d-flex flex-grow-1">
-            <form className="d-flex flex-grow-1" role="search">
+
+          <div className="flex-grow-1 ps-5">
+            <NavLink to="/">Home</NavLink>
+
+            {user && user.email === ConstValue.admin ? (
+              <NavLink to="/admin/add-product">Add Product</NavLink>
+            ) : (
+              ""
+            )}
+
+            <NavLink to="/blog">Blog</NavLink>
+            <NavLink to="/about">About Us</NavLink>
+          </div>
+          <div className="d-flex">
+            <div className="input-group">
               <input
-                className="form-control me-2 "
+                className="form-control searchBar"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-warning" type="submit">
-                Search
+              <div className="input-group-text">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </div>
+            </div>
+            <Link to="/cart" className="ps-3">
+              <button
+                type="button"
+                className="btn btn-warning position-relative"
+              >
+                <div className="d-flex px-1 py-1 ">
+                  <FontAwesomeIcon icon={faCartShopping} />
+                  Cart
+                </div>
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  99+
+                  <span className="visually-hidden">unread messages</span>
+                </span>
               </button>
-            </form>
-          </div>
-          <div className="d-flex">
-            <Link to="/cart" className="ms-3 btn btn-outline-info text-decoration-none">
-              Cart
             </Link>
-            <CustomButton
-              type="button"
-              className="loginBtn ms-3"
-              buttonLabel={user !== null ? "Logout" : "Login"}
-              id="button"
-              onClick={user !== null ? handleSignOut : handleSignIn}
-            />
-            
+
+            <Dropdown menu={{ items }}>
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  <UserOutlined style={{ color: "black" }} />
+                </Space>
+              </a>
+            </Dropdown>
           </div>
         </div>
       </nav>

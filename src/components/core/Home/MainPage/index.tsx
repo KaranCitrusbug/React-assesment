@@ -1,12 +1,14 @@
 import React from 'react'
 import MainHeader from '../Header/Index'
-import { Table } from 'antd'
+
+import CarouselComponent from '../Carousel/index'
+import DisplayProduct from "../DisplayProduct/Index"
 
 const index:React.FC = () => {
   return (
     <MainHeader>
-     <Table>
-      </Table>
+     <CarouselComponent/>
+     <DisplayProduct/>
     </MainHeader>
   )
 }

@@ -12,7 +12,7 @@ import CustomButton from "../../../UI/Button/Button";
 import { loginProps } from "../../../../types/loginType";
 import CustomInput from "../../../UI/InputField/input";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginValidation } from "../../../../utils/Index";
+import { loginValidation } from "../../../../utils/Validation";
 
 import images from "../../../../assets/AllImages";
 import "./index.css";
@@ -64,7 +64,7 @@ const Login: React.FC = () => {
                 name="email"
                 className="form-control"
               />
-              {errors.email && <span>{errors.email.message}</span>}
+              {errors.email && <span className="error">{errors.email.message}</span>}
               <br />
               <CustomInput
                 label="Password: "
@@ -75,7 +75,7 @@ const Login: React.FC = () => {
                 name="password"
                 className="form-control"
               />
-              {errors.password && <span>{errors.password.message}</span>}
+              {errors.password && <span className="error">{errors.password.message}</span>}
               <br />
               <CustomButton
                 type="submit"
