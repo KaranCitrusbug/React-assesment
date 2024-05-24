@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Form, Input, InputNumber, Modal } from "antd";
-import { ModalProps } from "../../../../types/ModalProps";
-import "./style.css";
+
 import Select, { SingleValue } from "react-select";
-import {  addDoc, collection } from "firebase/firestore";
+
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../../firebase";
+
+import { ModalProps } from "../../../../types/ModalProps";
+
+import "./style.css";
 
 const AddProduct: React.FC<ModalProps> = ({
   isModalOpen,
@@ -15,57 +19,57 @@ const AddProduct: React.FC<ModalProps> = ({
     useState<SingleValue<{ value: string; label: string }>>(null);
   const [form] = Form.useForm();
 
-  const productData = collection(db,"products")
+  const productData = collection(db, "products");
 
   const option = [
     {
-      value: "men",
+      value: "Men",
       label: "Men",
     },
     {
-      value: "women",
+      value: "Women",
       label: "Women",
     },
     {
-      value: "kid",
+      value: "Kid",
       label: "Kid",
     },
   ];
 
   const handleSelect = (
-    option: SingleValue<{ value: string; label: string }>    
+    option: SingleValue<{ value: string; label: string }>
   ) => {
     setSelectedOption(option);
-    form.setFieldsValue({ category: option })
+    form.setFieldsValue({ category: option });
   };
 
-  const handleProduct =  () => {
-    form.validateFields()
+  const handleProduct = () => {
+    form
+      .validateFields()
       .then(async (values) => {
-        
         handleOk();
-        console.log(values);
-        await addDoc(productData,{
-        name : values.name,
-        description : values.description,
-        img : values.img_URL,
-        id : Date.now(),
-        category : values.category,
-        price : values.price,
-        quantity: values.quantity     
-        })
+        
+        await addDoc(productData, {
+          name: values.name,
+          description: values.description,
+          img: values.img_URL,
+          id: Date.now().toString(),
+          category: selectedOption ? selectedOption.value : '',
+          price: values.price,
+          quantity: values.quantity,
+        });
+
         form.resetFields();
         setSelectedOption(null);
-        
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
-  const handleClose =() =>{
+  const handleClose = () => {
     form.resetFields();
     handleCancel();
-  }
+  };
 
   return (
     <Modal
@@ -102,7 +106,7 @@ const AddProduct: React.FC<ModalProps> = ({
             },
           ]}
         >
-          <Input />
+          <Input type="textarea" />
         </Form.Item>
         <Form.Item
           name="img_URL"

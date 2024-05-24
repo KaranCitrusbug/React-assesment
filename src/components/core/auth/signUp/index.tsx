@@ -18,7 +18,7 @@ import { validation } from "../../../../utils/Validation";
 
 import "react-phone-input-2/lib/material.css";
 import "./index.css";
-import { onChange } from "react-toastify/dist/core/store";
+
 
 const Index: React.FC = () => {
   const {
@@ -37,7 +37,7 @@ const Index: React.FC = () => {
     password,
     name,
   }) => {
-    let userDetails = createUserWithEmailAndPassword(
+     createUserWithEmailAndPassword(
       auth,
       email,
       password

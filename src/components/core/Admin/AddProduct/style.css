@@ -54,3 +54,15 @@ h2{
  .ant-modal-title{
   font-size: 20px !important;
  }
+ .loadingProduct{
+   
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.action-btn{
+  height: fit-content;
+}
+.ant-table-tbody .ant-table-cell{
+  font-weight: 400;
+}

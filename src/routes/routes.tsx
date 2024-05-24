@@ -8,7 +8,7 @@ const SignUp = lazy(()=> import('../pages/Auth/signUp'))
 const PageNotFound =lazy(()=> import('../pages/PageNotFound/PageNotFound'))
 const Cart =lazy(()=> import('../components/core/Cart/index'))
 const AddProduct =lazy(()=> import('../pages/Admin/Index'))
-const Blogs =lazy(()=>import("../pages/Blog/Index"))
+const Blogs =lazy(()=>import("../pages/Feedback/Index"))
 
 const RoutesPage:React.FC = () => {
   return (

@@ -6,24 +6,23 @@ import './style.css'
 const Index:React.FC = () => {
     const [products, setProducts] = useState<any>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    useEffect(() => {
-        const fetchProducts = async () => {
-          try {
-            const q = query(collection(db, "products"));
-            const querySnapshot = await getDocs(q);
-            console.log(querySnapshot);
-            const productsList = querySnapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            }));
-            console.log(productsList);
-            setProducts(productsList);
-          } catch (error) {
-            console.error("Error fetching products: ", error);
-          } finally {
-            setLoading(false);
-          }
-        };
+    const fetchProducts = async () => {
+      try {
+        const q = query(collection(db, "products"));
+        const querySnapshot = await getDocs(q);
+        const productsList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProducts(productsList);
+      } catch (error) {
+        console.error("Error fetching products: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    useEffect(() => {     
     
         fetchProducts();
       }, []);
@@ -36,7 +35,7 @@ const Index:React.FC = () => {
           return (
             <div key={product.id}>
               {product.name}
-              <img src={product.img} alt="img" />
+              {/* <img src={product.img} alt="img" /> */}
               {product.price}
               
               {/* {product.description} */}

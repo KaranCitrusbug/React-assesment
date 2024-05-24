@@ -1,14 +1,9 @@
-import React from 'react'
+import React from "react";
 
-import HomeComponent from '../../components/core/Home/MainPage/index'
-import Blog from '../../components/core/Blog/Index'
+import HomeComponent from "../../components/core/Home/MainPage/index";
 
-const Index = () => {
-  return (
-   
-        <HomeComponent/>
-  
-  )
-}
+const Index: React.FC = () => {
+  return <HomeComponent />;
+};
 
-export default Index
+export default Index;

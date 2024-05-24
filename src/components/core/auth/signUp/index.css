@@ -39,3 +39,7 @@ form{
 .react-tel-input .flag-dropdown{
     top: 20px !important;
 }
+.signUp a{
+    text-decoration: underline !important;
+    color: blue !important;
+}

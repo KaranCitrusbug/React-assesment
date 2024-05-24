@@ -4,23 +4,23 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { auth } from "../../../../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
+
+import { UserOutlined } from "@ant-design/icons";
+import type { MenuProps } from "antd";
+import { Dropdown, Space } from "antd";
+
 import Images from "../../../../assets/AllImages";
 import CustomButton from "../../../UI/Button/Button";
 
-import { HeartFilled, UserOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Dropdown, Space } from "antd";
+import { ConstValue } from "../../../../utils/ConstFile";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
   faCartShopping,
-  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./style.css";
-import { ConstValue } from "../../../../utils/ConstFile";
-
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -41,7 +41,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
     navigate("/login");
   };
 
-  const items: MenuProps["items"] = [    
+  const items: MenuProps["items"] = [
     {
       key: "1",
       label: (
@@ -104,7 +104,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
               ""
             )}
 
-            <NavLink to="/blog">Blog</NavLink>
+            <NavLink to="/blog">Feedback</NavLink>
             <NavLink to="/about">About Us</NavLink>
           </div>
           <div className="d-flex">

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import CustomButton from "../../../UI/Button/Button";
 import MainHeader from "../../Home/Header/Index"
 import AddProduct from "./AddProduct";
+import ProductListing from "./ProductListing";
 import "./style.css";
 
 
@@ -21,7 +22,7 @@ const Index: React.FC = () => {
   const handleCancel = () => {
     setModalIsOpen(false);
   };
-  console.log(modalIsOpen);
+
 
   return (
     <MainHeader>
@@ -42,7 +43,7 @@ const Index: React.FC = () => {
         handleOk={handleOk}
         handleCancel={handleCancel}
       />
-      
+      <ProductListing  />
    
     </MainHeader>
   );

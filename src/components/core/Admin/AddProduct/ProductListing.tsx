@@ -1,187 +1,135 @@
-import React from "react";
-import { Table, TableColumnsType, TableProps } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Popconfirm, Spin, Table } from "antd";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
+import { db } from "../../../../firebase";
+import { toast } from "react-toastify";
 
-interface DataType {
-  key: React.Key;
+interface ProductType {
+  id: string;
+  name: string;
+  img: string;
   category: string;
-  age: number;
-  address: string;
+  description: string;
+  price: number;
+  quantity: number;
 }
 
 const ProductListing: React.FC = () => {
-const columns: TableColumnsType<DataType> = [
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetchProducts = async () => {
+    try {
+      const fetchProducts = query(collection(db, "products"));
+      onSnapshot(fetchProducts, function productsList(snapShort) {
+        let newProduct: ProductType[] = [];
+        snapShort.docs.forEach((products) => {
+          newProduct.push({
+            id: products.id,
+            name: products.data().name,
+            img: products.data().img,
+            category: products.data().category,
+            description: products.data().description,
+            price: products.data().price,
+            quantity: products.data().quantity,
+          });
+        });
+        setProducts(newProduct);
+      });
+    } catch (error) {
+      console.error("Error fetching products: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleDelete = async (id: string) => {
+    try {
+      const productDelete = doc(db, "products", id);
+      await deleteDoc(productDelete);
+      toast.error("Product deleted successfully", {
+        autoClose: 2000,
+      });
+    } catch (error) {
+      console.error("Error deleting product: ", error);
+      toast.error("Failed to delete product");
+    }
+  };
+  const handleEdit = ()=>{
+    console.log("edit")
+  }
+
+  const columns = [
     {
-      title: "category",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      width: 100,
+    },
+    {
+      title: "Category",
       dataIndex: "category",
-      filters: [
-        {
-          text: "Men's",
-          value: "Men",
-          children: [
-            {
-              text: "Top Wear",
-              value: "top wear",
-              children: [
-                {
-                  text: "T-Shirt",
-                  value: "t-shirt",
-                },
-                {
-                  text: "Shirt",
-                  value: "shirt",
-                },
-                {
-                  text: "Formal Shirt",
-                  value: "formalShirt",
-                },
-                {
-                  text: "Casual shirt",
-                  value: "casualShirt",
-                },
-              ],
-            },
-            {
-              text: "Bottom Wear",
-              value: "bottom wear",
-              children: [
-                {
-                  text: "Jeans",
-                  value: "jeans",
-                },
-                {
-                  text: "Casual Trouser",
-                  value: "casualTrouser",
-                },
-                {
-                  text: "Cargos",
-                  value: "cargos",
-                },
-                {
-                  text: "Shorts",
-                  value: "shorts",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          text: "Women's",
-          value: "women",
-          children: [
-            {
-              text: "Top Wear",
-              value: "top wear",
-              children: [
-                {
-                  text: "T-Shirt",
-                  value: "t-shirt",
-                },
-                {
-                  text: "Shirt",
-                  value: "shirt",
-                },
-                {
-                  text: "Formal Shirt",
-                  value: "formalShirt",
-                },
-                {
-                  text: "Casual shirt",
-                  value: "casualShirt",
-                },
-              ],
-            },
-            {
-              text: "Bottom Wear",
-              value: "bottom wear",
-              children: [
-                {
-                  text: "Jeans",
-                  value: "jeans",
-                },
-                {
-                  text: "Casual Trouser",
-                  value: "casualTrouser",
-                },
-                {
-                  text: "Cargos",
-                  value: "cargos",
-                },
-                {
-                  text: "Shorts",
-                  value: "shorts",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-      filterMode: "tree",
-      filterSearch: true,
-      onFilter: (value, record) => record.category.includes(value as string),
-      width: "30%",
+      key: "category",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      sorter: (a, b) => a.age - b.age,
+      title: "Image",
+      dataIndex: "img",
+      key: "img",
+      render: (text: string) => (
+        <img src={text} alt="product" style={{ width: 50 }} />
+      ),
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      filters: [
-        {
-          text: "London",
-          value: "London",
-        },
-        {
-          text: "New York",
-          value: "New York",
-        },
-      ],
-      onFilter: (value, record) => record.address.startsWith(value as string),
-      filterSearch: true,
-      width: "40%",
+      title: "Price",
+      dataIndex: "price",
+      key: "Price",
+    },
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "Action",
+      key: "action",
+      width: 200,
+      render: (products: ProductType) => (
+        <span>
+          <Button  className="btn btn-primary me-1 action-btn" onClick={handleEdit}>Edit</Button>
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => handleDelete(products.id)}
+          >
+            <Button type="text" className="btn btn-danger action-btn">Delete</Button>
+          </Popconfirm>
+        </span>
+      ),
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: "1",
-      category: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-    },
-    {
-      key: "2",
-      category: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-    },
-    {
-      key: "3",
-      category: "Joe Black",
-      age: 32,
-      address: "Sydney No. 1 Lake Park",
-    },
-    {
-      key: "4",
-      category: "Jim Red",
-      age: 32,
-      address: "London No. 2 Lake Park",
-    },
-  ];
-  const onChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
-    <div>
-      <Table columns={columns} dataSource={data} onChange={onChange} />
-    </div>
+    <>
+      {loading ? (
+        <Spin className="loadingProduct" />
+      ) : (
+        <Table columns={columns} dataSource={products} className="mt-5" />
+      )} 
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
 //  email and password fields.
-import React, { FC } from "react";
+import React from "react";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -84,7 +84,7 @@ const Login: React.FC = () => {
                 id="btn"
               />
             </div>
-            <Link to="/" className="text-center">
+            <Link to="/" className="text-center ">
               Forgot Password?
             </Link>
             <div className="d-flex justify-content-center">
