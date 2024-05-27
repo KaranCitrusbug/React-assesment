@@ -17,6 +17,7 @@ const EditProduct: React.FC<EditProductProps> = ({
     useState<SingleValue<{ value: string; label: string }>>(null);
   const [form] = Form.useForm();
 
+  console.log(initialValue)
   const option = [
     {
       value: "Men",
@@ -57,8 +58,9 @@ const EditProduct: React.FC<EditProductProps> = ({
   useEffect(() => {
     if (initialValue) {
       const selectedCategory = option.find(
-        (option) => option.value === initialValue.category
+        (option) => option.value === initialValue.category.value
       );
+    
       setSelectedOption(selectedCategory || null);
       form.setFieldsValue({
         ...initialValue,
@@ -139,7 +141,7 @@ const EditProduct: React.FC<EditProductProps> = ({
             },
             {
               type: "number",
-              min: 1,
+              min: 0,
               message: "You must have at least 1 quantity of the product!",
             },
           ]}

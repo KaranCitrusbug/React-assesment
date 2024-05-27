@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import './style.css'
 
-const Index : React.FC= () => {
+const Footer : React.FC= () => {
   return (
     <footer className="footer-section p-5">
       <div className="row">
@@ -41,16 +41,16 @@ const Index : React.FC= () => {
           <ul>
             <li>Social Media</li>
             <div className="row">
-              <div className="col-3">
+              <div className="col-1">
                 <InstagramOutlined />
               </div>
-              <div className="col-3">
+              <div className="col-1">
                 <WhatsAppOutlined />
               </div>
-              <div className="col-3">
+              <div className="col-1">
                 <TwitterOutlined />
               </div>
-              <div className="col-3">
+              <div className="col-1">
                 <YoutubeOutlined />
               </div>
             </div>
@@ -61,4 +61,4 @@ const Index : React.FC= () => {
   );
 };
 
-export default Index;
+export default Footer;

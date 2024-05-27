@@ -21,7 +21,7 @@ const Index: React.FC = () => {
 
   return (
     <MainHeader>
-      <div className="container">
+      <div className="container add-product">
         <div className="d-flex justify-content-between mt-3">
           <div>
             <h2>Products:</h2>

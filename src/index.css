@@ -44,3 +44,6 @@ span.error{
 p{
   margin: 0;
 }
+.ant-pagination .ant-pagination-item a{
+  display: inline;
+}

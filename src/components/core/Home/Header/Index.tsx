@@ -4,8 +4,12 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { auth } from "../../../../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
-
-import { HomeOutlined, ProductOutlined, ShoppingOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  HomeOutlined,
+  ProductOutlined,
+  ShoppingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
 
@@ -84,7 +88,8 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
     <>
       <nav className="navbar navbar-expand-lg position-sticky top-0 z-3">
         <div className="container d-flex justify-content-between">
-        <NavLink className="navbar-brand text-decoration-none" to="/">
+          
+          <NavLink className="navbar-brand text-decoration-none" to="/">
             <div className="logo d-flex justify-content-center align-center">
               <img
                 src={Images.Logo}
@@ -94,12 +99,18 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
             </div>
             <p className="title">ClothStore</p>
           </NavLink>
-          <div >
-            <NavLink to="/"><HomeOutlined/> Home</NavLink>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <NavLink to="/">
+              <HomeOutlined /> Home
+            </NavLink>
 
-            <NavLink to="/shop"><ShoppingOutlined/> Shop</NavLink>
+            <NavLink to="/shop">
+              <ShoppingOutlined /> Shop
+            </NavLink>
             {user && user.email === ConstValue.admin ? (
-              <NavLink to="/admin/add-product"><ProductOutlined/> Add Product</NavLink>
+              <NavLink to="/admin/add-product">
+                <ProductOutlined /> Add Product
+              </NavLink>
             ) : (
               ""
             )}
@@ -107,19 +118,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
             <NavLink to="/blog">Feedback</NavLink>
             <NavLink to="/about">About Us</NavLink>
           </div>
-          
           <div className="d-flex">
-            <div className="input-group">
-              <input
-                className="form-control searchBar"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <div className="input-group-text">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </div>
-            </div>
             <Link to="/cart" className="ps-3">
               <button
                 type="button"
@@ -144,9 +143,20 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
               </a>
             </Dropdown>
           </div>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
         </div>
       </nav>
-      <main className="container" >{children}</main>
+      <main>{children}</main>
     </>
   );
 };

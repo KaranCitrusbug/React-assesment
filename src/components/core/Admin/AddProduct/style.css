@@ -66,3 +66,6 @@ h2{
 .ant-table-tbody .ant-table-cell{
   font-weight: 400;
 }
+.add-product .ant-dropdown-trigger{
+  background-color: transparent!important;
+}

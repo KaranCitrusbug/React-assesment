@@ -36,7 +36,7 @@ const PostList: React.FC = () => {
   }, []);
 
   return (
-    <div className=" infinite-Scroll">
+    <div className=" infinite-Scroll container">
       <h1 className="mt-5 mb-3">What User say about Us?</h1>
       <InfiniteScroll
         dataLength={posts.length}

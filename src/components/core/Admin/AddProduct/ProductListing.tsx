@@ -18,7 +18,7 @@ const ProductListing: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [initialValue, setInitialValue] = useState<ProductType | null>(null);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [pageSize, setPageSize] = useState<number>(5);
 
   const handleAddProduct = () => {
     setModalIsOpen(true);
@@ -40,7 +40,7 @@ const ProductListing: React.FC = () => {
             id: products.id,
             name: products.data().name,
             img: products.data().img,
-            category: products.data().category.value,
+            category: products.data().category,
             description: products.data().description,
             price: products.data().price,
             quantity: products.data().quantity,
@@ -80,14 +80,36 @@ const ProductListing: React.FC = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      fixed: "left",
       width: 150,
     },
     {
       title: "Category",
       dataIndex: "category",
       key: "category",
-      fixed: "left",
+      width:150,
+      render: (category :{
+        value: string;
+        label: string;
+    }) => (
+        <span>{category.value}</span>
+      ),
+      filters: [
+        {
+          text:'Men',
+          value: 'Men',
+        },
+        {
+          text:'Women',
+          value: 'Women',
+        },
+        {
+          text:'Kid',
+          value: 'Kid',
+        },
+      ],
+      filterMultiple:false,
+      onFilter:(value ,record) =>record.category.indexOf(value)===0,
+      
     },
     {
       title: "Image",
@@ -100,12 +122,14 @@ const ProductListing: React.FC = () => {
     {
       title: "Price",
       dataIndex: "price",
-      key: "Price",
+      key: "price",
+      sorter:(a,b) => a.price - b.price
     },
     {
       title: "Quantity",
       dataIndex: "quantity",
       key: "quantity",
+      sorter:(a,b) => a.quantity - b.quantity
     },
     {
       title: "Description",
