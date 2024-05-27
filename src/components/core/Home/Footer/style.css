@@ -1,0 +1,22 @@
+.footer-section{
+    background-color:#feeafa;
+}
+
+.footer-section ul li{
+    list-style: none;;
+    margin-bottom: 10px;
+}
+.footer-section ul li a{
+    font-size: 14px;
+    color: gray !important;
+    padding: 0;
+   
+}
+.footer-section ul li a:hover{
+    color: black !important;
+}
+.footer-section ul li:first-child{
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: black;
+}

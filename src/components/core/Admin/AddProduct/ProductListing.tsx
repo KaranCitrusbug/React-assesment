@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Popconfirm, Spin, Table } from "antd";
+import { Button, Popconfirm, Spin, Table, TableColumnsType } from "antd";
 import {
   collection,
   deleteDoc,
@@ -10,20 +10,25 @@ import {
 } from "firebase/firestore";
 import { db } from "../../../../firebase";
 import { toast } from "react-toastify";
-
-interface ProductType {
-  id: string;
-  name: string;
-  img: string;
-  category: string;
-  description: string;
-  price: number;
-  quantity: number;
-}
+import EditProduct from "./EditProduct";
+import { ProductType } from "../../../../types/ProductType";
 
 const ProductListing: React.FC = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [initialValue, setInitialValue] = useState<ProductType | null>(null);
+  const [pageSize, setPageSize] = useState<number>(10);
+
+  const handleAddProduct = () => {
+    setModalIsOpen(true);
+  };
+  const handleOk = () => {
+    setModalIsOpen(false);
+  };
+  const handleCancel = () => {
+    setModalIsOpen(false);
+  };
 
   const fetchProducts = async () => {
     try {
@@ -35,7 +40,7 @@ const ProductListing: React.FC = () => {
             id: products.id,
             name: products.data().name,
             img: products.data().img,
-            category: products.data().category,
+            category: products.data().category.value,
             description: products.data().description,
             price: products.data().price,
             quantity: products.data().quantity,
@@ -61,21 +66,28 @@ const ProductListing: React.FC = () => {
       toast.error("Failed to delete product");
     }
   };
-  const handleEdit = ()=>{
-    console.log("edit")
-  }
+  const handleEdit = (id: string) => {
+    const product = products.find((product) => product.id === id);
 
-  const columns = [
+    if (product) {
+      setInitialValue(product);
+      handleAddProduct();
+    }
+  };
+
+  const columns: TableColumnsType = [
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      width: 100,
+      fixed: "left",
+      width: 150,
     },
     {
       title: "Category",
       dataIndex: "category",
       key: "category",
+      fixed: "left",
     },
     {
       title: "Image",
@@ -99,19 +111,28 @@ const ProductListing: React.FC = () => {
       title: "Description",
       dataIndex: "description",
       key: "description",
+      width:400,
     },
     {
       title: "Action",
       key: "action",
       width: 200,
+      fixed: "right",
       render: (products: ProductType) => (
         <span>
-          <Button  className="btn btn-primary me-1 action-btn" onClick={handleEdit}>Edit</Button>
+          <Button
+            className="btn btn-primary me-1 action-btn"
+            onClick={() => handleEdit(products.id)}
+          >
+            Edit
+          </Button>
           <Popconfirm
             title="Sure to delete?"
             onConfirm={() => handleDelete(products.id)}
           >
-            <Button type="text" className="btn btn-danger action-btn">Delete</Button>
+            <Button type="text" className="btn btn-danger action-btn">
+              Delete
+            </Button>
           </Popconfirm>
         </span>
       ),
@@ -127,8 +148,27 @@ const ProductListing: React.FC = () => {
       {loading ? (
         <Spin className="loadingProduct" />
       ) : (
-        <Table columns={columns} dataSource={products} className="mt-5" />
-      )} 
+        <>
+          <Table
+            columns={columns}
+            dataSource={products}
+            pagination={{
+              pageSize: pageSize,
+              showSizeChanger: true,
+              pageSizeOptions: ['5', '10','15'],
+              onShowSizeChange: (current, size) => setPageSize(size),
+            }}
+            scroll={{ x: 1200 }}
+            className="mt-5"
+          />
+          <EditProduct
+            isModalOpen={modalIsOpen}
+            handleCancel={handleCancel}
+            handleOk={handleOk}
+            initialValue={initialValue}
+          />
+        </>
+      )}
     </>
   );
 };

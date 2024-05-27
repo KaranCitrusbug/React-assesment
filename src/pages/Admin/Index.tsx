@@ -1,6 +1,6 @@
 import React from 'react'
 import AddProduct from "../../components/core/Admin/AddProduct/Index"
-const Index = () => {
+const Index :React.FC = () => {
   return (
     <AddProduct/>
   )

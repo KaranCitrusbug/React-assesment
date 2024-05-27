@@ -9,6 +9,7 @@ const PageNotFound =lazy(()=> import('../pages/PageNotFound/PageNotFound'))
 const Cart =lazy(()=> import('../components/core/Cart/index'))
 const AddProduct =lazy(()=> import('../pages/Admin/Index'))
 const Blogs =lazy(()=>import("../pages/Feedback/Index"))
+const Shop =lazy(()=> import("../pages/Shop/Index"))
 
 const RoutesPage:React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const RoutesPage:React.FC = () => {
             <Route  path='/signup' Component={SignUp}></Route>
             <Route path='/cart' Component={Cart}></Route>
             <Route path='/blog' Component={Blogs}></Route>
+            <Route path='/shop' Component={Shop}></Route>
             <Route  path='*' Component={PageNotFound}></Route>
             <Route path='/admin/add-product' Component={AddProduct}></Route>
           </Routes>

@@ -13,6 +13,7 @@
 }
 nav{
     background-color: #feeafa ;
+    z-index: 1;
 }
 .loginBtn{
     background-color: inherit;
@@ -45,7 +46,7 @@ a{
 a{
     text-decoration: none;
     color: #344e41 !important;
-    padding: 0px 12px ;
+    padding: 0px 8px ;
   }
   nav{
     z-index: 99;

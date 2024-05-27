@@ -5,7 +5,7 @@ import { auth } from "../../../../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 
-import { UserOutlined } from "@ant-design/icons";
+import { HomeOutlined, ProductOutlined, ShoppingOutlined, UserOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
 
@@ -84,7 +84,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
     <>
       <nav className="navbar navbar-expand-lg position-sticky top-0 z-3">
         <div className="container d-flex justify-content-between">
-          <NavLink className="navbar-brand text-decoration-none" to="/">
+        <NavLink className="navbar-brand text-decoration-none" to="/">
             <div className="logo d-flex justify-content-center align-center">
               <img
                 src={Images.Logo}
@@ -94,12 +94,12 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
             </div>
             <p className="title">ClothStore</p>
           </NavLink>
+          <div >
+            <NavLink to="/"><HomeOutlined/> Home</NavLink>
 
-          <div className="flex-grow-1 ps-5">
-            <NavLink to="/">Home</NavLink>
-
+            <NavLink to="/shop"><ShoppingOutlined/> Shop</NavLink>
             {user && user.email === ConstValue.admin ? (
-              <NavLink to="/admin/add-product">Add Product</NavLink>
+              <NavLink to="/admin/add-product"><ProductOutlined/> Add Product</NavLink>
             ) : (
               ""
             )}
@@ -107,6 +107,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
             <NavLink to="/blog">Feedback</NavLink>
             <NavLink to="/about">About Us</NavLink>
           </div>
+          
           <div className="d-flex">
             <div className="input-group">
               <input
@@ -145,7 +146,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
           </div>
         </div>
       </nav>
-      <main className="container">{children}</main>
+      <main className="container" >{children}</main>
     </>
   );
 };

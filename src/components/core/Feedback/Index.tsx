@@ -42,7 +42,7 @@ const PostList: React.FC = () => {
         dataLength={posts.length}
         next={fetchPosts}
         hasMore={hasMore}
-        loader={<Spin />}
+        loader={<Spin  className="text-center" />}
         endMessage={<p>No more posts to show.</p>}
       >
         {posts.map((post, index) => (

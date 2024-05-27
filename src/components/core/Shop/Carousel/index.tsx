@@ -17,7 +17,8 @@ const Index : React.FC= () => {
       showThumbs={false}
       autoPlay={true}
       interval={4000}
-      className='mt-3'>
+      className='mt-3'
+      >
         {
             carouselImage.map((img, index) => {
                 return (

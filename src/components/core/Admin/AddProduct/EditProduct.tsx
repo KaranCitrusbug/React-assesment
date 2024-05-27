@@ -1,25 +1,21 @@
-import React, { useState } from "react";
 import { Form, Input, InputNumber, Modal } from "antd";
-
-import Select, { SingleValue } from "react-select";
-
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../../../firebase";
-
+import React, { useEffect, useState } from "react";
 import { ModalProps } from "../../../../types/ModalProps";
+import Select, { SingleValue } from "react-select";
+import { EditProductProps } from "../../../../types/EditProductType";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../../firebase";
+import { toast } from "react-toastify";
 
-import "./style.css";
-
-const AddProduct: React.FC<ModalProps> = ({
+const EditProduct: React.FC<EditProductProps> = ({
   isModalOpen,
   handleOk,
   handleCancel,
+  initialValue,
 }) => {
   const [selectedOption, setSelectedOption] =
     useState<SingleValue<{ value: string; label: string }>>(null);
   const [form] = Form.useForm();
-
-  const productData = collection(db, "products");
 
   const option = [
     {
@@ -42,44 +38,44 @@ const AddProduct: React.FC<ModalProps> = ({
     setSelectedOption(option);
     form.setFieldsValue({ category: option });
   };
-
-  const handleProduct = () => {
+  const handleEditProduct = () => {
     form
       .validateFields()
-      .then(async (values) => {
+      .then(async (updateValue) => {
         handleOk();
-        
-        await addDoc(productData, {
-          name: values.name,
-          description: values.description,
-          img: values.img,
-          id: Date.now().toString(),
-          category: selectedOption,
-          price: values.price,
-          quantity: values.quantity,
-        });
-
+        if (initialValue) {
+          const editProduct = doc(db, "products", initialValue.id);
+          await updateDoc(editProduct, updateValue);
+        }
         form.resetFields();
-        setSelectedOption(null);
+        toast.success("Product updated successfully")
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
   };
-  const handleClose = () => {
-    form.resetFields();
-    handleCancel();
-  };
+  useEffect(() => {
+    if (initialValue) {
+      const selectedCategory = option.find(
+        (option) => option.value === initialValue.category
+      );
+      setSelectedOption(selectedCategory || null);
+      form.setFieldsValue({
+        ...initialValue,
+        category: selectedCategory,
+      });
+    }
+  }, [initialValue]);
 
   return (
     <Modal
-      title="Add Product"
+      title="Edit Product"
       open={isModalOpen}
-      onOk={handleProduct}
-      onCancel={handleClose}
+      onOk={handleEditProduct}
+      onCancel={handleCancel}
       centered
       focusTriggerAfterClose
-      okText="Add Product"
+      okText="Edit Product"
       okButtonProps={{ className: "okButton" }}
       cancelButtonProps={{ className: "cancelButton" }}
     >
@@ -172,4 +168,4 @@ const AddProduct: React.FC<ModalProps> = ({
   );
 };
 
-export default AddProduct;
+export default EditProduct;

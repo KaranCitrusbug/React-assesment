@@ -6,6 +6,7 @@ import Logo from "./image/logo.png"
 import Carousel1 from "./image/carousel1.jpg"
 import Carousel2 from "./image/carousel2.jpg"
 import Carousel3 from "./image/carousel3.jpg"
+import heroImg from "./image/hero.png"
 
 const AllImages ={
     PageNotFoundImage,
@@ -16,6 +17,7 @@ const AllImages ={
     Carousel1,
     Carousel2,
     Carousel3,
+    heroImg,
 }
 
 export default AllImages

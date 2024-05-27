@@ -1,0 +1,55 @@
+.hero-img {
+  background: url("../../../../assets/image//hero.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 87vh;
+  position: relative;
+  filter: brightness(40%);
+}
+.hero-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  padding: 10%;
+}
+.hero-title h3 {
+  margin: 0;
+  color: white;
+  font-size: 5rem;
+  line-height: 6rem;
+  text-align: center;
+  font-style: italic;
+  font-weight: 700;
+  font-family: 'Cormorant Garamond',serif !important;
+}
+.hero-title p {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #fdf0d5;
+  line-height: 1.25rem;
+  text-align: center;
+  font-weight: 400;
+  font-family: "Cormorant Garamond", sans-serif !important;
+  margin-top: 5px;
+}
+.hero-button{
+    background-color: #ff70a6;
+    border-radius: 8px;
+    border: 1px solid #ff70a6;
+    color: white !important;
+    width: max-content;
+    margin-top: 20px;
+}
+
+.hero-button:hover{
+    background-color: transparent;
+    color: #ff70a6 !important;
+    border: 1px solid #ff70a6;
+}

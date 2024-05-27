@@ -1,16 +1,19 @@
-import React from 'react'
-import MainHeader from '../Header/Index'
+import React from "react";
+import MainHeader from "../Header/Index";
+import DisplayHeaderImage from "../DisplayHeroImage/Index";
+import Footer from '../Footer/Index'
 
-import CarouselComponent from '../Carousel/index'
-import DisplayProduct from "../DisplayProduct/Index"
-
-const index:React.FC = () => {
+const index: React.FC = () => {
   return (
-    <MainHeader>
-     <CarouselComponent/>
-     <DisplayProduct/>
-    </MainHeader>
-  )
-}
+    <>
+      <MainHeader>
+        <></>
+      </MainHeader>
+      <DisplayHeaderImage />
+      <Footer/>
+      
+    </>
+  );
+};
 
-export default index
+export default index;
