@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import images from "../../../assets/AllImages";
 
-const index = () => {
+const index : React.FC = () => {
   return (
+
     <main role="main" className="flex-shrink-0 middle-section">
       <div className="middle-inner">
         <section className="page-not-found-section">
@@ -15,7 +16,7 @@ const index = () => {
                     <img
                       src={images.PageNotFoundImage}
                       className="img-fluid"
-                      alt=""
+                      alt="you lost"
                       loading="lazy"
                     />
                   </div>
@@ -25,7 +26,7 @@ const index = () => {
                   <div className="page-not-found-btn">
                     <Link
                       to="/"
-                      className="btn btn-primary btn-pad-60 btn-uppercase"
+                      className="btn btn-primary btn-pad-60 btn-uppercase text-light"
                     >
                       Go To Homepage
                     </Link>

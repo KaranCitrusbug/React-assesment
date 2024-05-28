@@ -41,9 +41,7 @@ span.error{
   font-size: 12px;
   color: red;
 }
-p{
-  margin: 0;
-}
+
 .ant-pagination .ant-pagination-item a{
   display: inline;
 }

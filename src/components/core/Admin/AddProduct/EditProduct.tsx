@@ -48,12 +48,26 @@ const EditProduct: React.FC<EditProductProps> = ({
           const editProduct = doc(db, "products", initialValue.id);
           await updateDoc(editProduct, updateValue);
         }
-        form.resetFields();
+       
         toast.success("Product updated successfully")
       })
       .catch((info) => {
         console.log("Validate Failed:", info);
       });
+  };
+  const handleClose = () => {
+    if (initialValue) {
+      const selectedCategory = option.find(
+        (option) => option.value === initialValue.category.value
+      );
+    
+      setSelectedOption(selectedCategory || null);
+      form.setFieldsValue({
+        ...initialValue,
+        category: selectedCategory,
+      });
+    }
+    handleCancel();
   };
   useEffect(() => {
     if (initialValue) {
@@ -74,7 +88,7 @@ const EditProduct: React.FC<EditProductProps> = ({
       title="Edit Product"
       open={isModalOpen}
       onOk={handleEditProduct}
-      onCancel={handleCancel}
+      onCancel={handleClose}
       centered
       focusTriggerAfterClose
       okText="Edit Product"
@@ -104,11 +118,11 @@ const EditProduct: React.FC<EditProductProps> = ({
             },
           ]}
         >
-          <Input type="textarea" />
+           <Input.TextArea rows={3} />
         </Form.Item>
         <Form.Item
           name="img"
-          label="Product URL:"
+          label="Product Image:"
           rules={[
             {
               required: true,

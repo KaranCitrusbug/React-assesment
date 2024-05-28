@@ -108,7 +108,7 @@ const ProductListing: React.FC = () => {
         },
       ],
       filterMultiple:false,
-      onFilter:(value ,record) =>record.category.indexOf(value)===0,
+      onFilter:(value ,record) =>record.category.value.indexOf(value) ===0,
       
     },
     {
@@ -141,7 +141,7 @@ const ProductListing: React.FC = () => {
       title: "Action",
       key: "action",
       width: 200,
-      fixed: "right",
+     
       render: (products: ProductType) => (
         <span>
           <Button

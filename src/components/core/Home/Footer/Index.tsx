@@ -10,9 +10,9 @@ import './style.css'
 
 const Footer : React.FC= () => {
   return (
-    <footer className="footer-section p-5">
+    <footer className="footer-section  p-5">
       <div className="row">
-        <div className="col-4">
+        <div className="col-md-4 col-lg-4 col-sm-12">
           <ul>
             <li>Menu</li>
             <li>
@@ -29,7 +29,7 @@ const Footer : React.FC= () => {
             </li>
           </ul>
         </div>
-        <div className="col-4">
+        <div className="col-md-4 col-lg-4 col-sm-12">
           <ul >
             <li>Categories</li>
             <li><Link to='/'>Kids</Link></li>
@@ -37,7 +37,7 @@ const Footer : React.FC= () => {
             <li><Link to='/'>Women</Link></li>
           </ul>
         </div>
-        <div className="col-4">
+        <div className="col-md-4 col-lg-4 col-sm-12">
           <ul>
             <li>Social Media</li>
             <div className="row">

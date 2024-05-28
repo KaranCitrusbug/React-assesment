@@ -50,4 +50,12 @@ a{
   }
   nav{
     z-index: 99;
+    position: relative;
+  }
+
+  @media screen and (max-width:991px){
+    .cart-and-user {
+        display: none !important;
+    }
+  
   }

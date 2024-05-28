@@ -20,7 +20,6 @@ import { ConstValue } from "../../../../utils/ConstFile";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faMagnifyingGlass,
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -86,7 +85,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg position-sticky top-0 z-3">
+      <nav className="navbar navbar-expand-lg sticky-top  z-3">
         <div className="container d-flex justify-content-between">
           
           <NavLink className="navbar-brand text-decoration-none" to="/">
@@ -99,7 +98,18 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
             </div>
             <p className="title">ClothStore</p>
           </NavLink>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
             <NavLink to="/">
               <HomeOutlined /> Home
             </NavLink>
@@ -118,7 +128,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
             <NavLink to="/blog">Feedback</NavLink>
             <NavLink to="/about">About Us</NavLink>
           </div>
-          <div className="d-flex">
+          <div className="d-flex cart-and-user">
             <Link to="/cart" className="ps-3">
               <button
                 type="button"
@@ -129,7 +139,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
                   Cart
                 </div>
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  99+
+                  0
                   <span className="visually-hidden">unread messages</span>
                 </span>
               </button>
@@ -143,17 +153,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
               </a>
             </Dropdown>
           </div>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+          
         </div>
       </nav>
       <main>{children}</main>

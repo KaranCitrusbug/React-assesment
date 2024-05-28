@@ -1,30 +1,28 @@
-
-h2{
-    font-weight: 600;
-   
+h2 {
+  font-weight: 600;
 }
 .ant-btn.okButton {
-    background: #ff70a6;
-    border-radius: 8px;
-    border: 1px solid #ff70a6;
-    padding: 12px 20px;
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 22px;
-    color: #ffffff;
-    height: auto;
-    transition: all 0.2s;
-  }
+  background: #ff70a6;
+  border-radius: 8px;
+  border: 1px solid #ff70a6;
+  padding: 12px 20px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+  color: #ffffff;
+  height: auto;
+  transition: all 0.2s;
+}
 .ant-btn.okButton:hover,
 .ant-btn.okButton:focus {
-    background: #fff !important;
-    color: #ff70a6 !important;
-    border-color: #ff70a6 !important;
+  background: #fff !important;
+  color: #ff70a6 !important;
+  border-color: #ff70a6 !important;
 }
 
-.ant-btn-default.cancelButton{
+.ant-btn-default.cancelButton {
   background: #2f3e46;
   border-radius: 8px;
   border: 1px solid #2f3e46;
@@ -37,35 +35,33 @@ h2{
   color: #ffffff;
   height: auto;
   transition: all 0.2s;
-
 }
 .ant-btn-default.cancelButton:hover,
 .ant-btn-default.cancelButton:focus {
-    background: #fff !important;
-    color: #2f3e46 !important;
-    border-color: #2f3e46 !important;
- }
- .ant-modal-content{
+  background: #fff !important;
+  color: #2f3e46 !important;
+  border-color: #2f3e46 !important;
+}
+.ant-modal-content {
   padding: 28px !important;
- }
- .ant-modal-header{
+}
+.ant-modal-header {
   padding-bottom: 10px !important;
- }
- .ant-modal-title{
+}
+.ant-modal-title {
   font-size: 20px !important;
- }
- .loadingProduct{
-   
+}
+.loadingProduct {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.action-btn{
+.action-btn {
   height: fit-content;
 }
-.ant-table-tbody .ant-table-cell{
+.ant-table-tbody .ant-table-cell {
   font-weight: 400;
 }
-.add-product .ant-dropdown-trigger{
-  background-color: transparent!important;
+.add-product .ant-dropdown-trigger {
+  background-color: transparent !important;
 }

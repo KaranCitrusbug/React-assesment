@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
   query,
   where,
 } from "firebase/firestore";
@@ -19,6 +20,7 @@ import { ProductType } from "../../../../types/ProductType";
 import { Spin } from "antd";
 
 import "./style.css";
+import Card from "./Card";
 
 const SingleProduct: React.FC = () => {
   const userId = useParams<string>();
@@ -40,13 +42,21 @@ const SingleProduct: React.FC = () => {
             where("id", "!=", productData.id)
           );
 
-          const relatedSnap = await getDocs(relatedQuery);
-
-          const relatedProductsData: ProductType[] = [];
-          relatedSnap.forEach((doc) =>
-            relatedProductsData.push(doc.data() as ProductType)
-          );
-          setRelatedProducts(relatedProductsData);
+          onSnapshot(relatedQuery, function productsList(snapShort) {
+            const relatedProductsData: ProductType[] = [];
+            snapShort.docs.forEach((products) => {
+              relatedProductsData.push({
+                id: products.id,
+                name: products.data().name,
+                img: products.data().img,
+                category: products.data().category,
+                description: products.data().description,
+                price: products.data().price,
+                quantity: products.data().quantity,
+              });
+            });
+            setRelatedProducts(relatedProductsData);
+          });
         }
       }
     } catch (error) {
@@ -107,6 +117,15 @@ const SingleProduct: React.FC = () => {
                 )}
               </div>
             </div>
+            <h2 className="mb-5">You might be interested in</h2>
+            {relatedProducts.length != 0 ? (
+              <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 mb-5">
+                <Card products={relatedProducts} />
+              </div>
+              
+            ) : (
+              ""
+            )}
           </div>
         )}
       </MainHeader>

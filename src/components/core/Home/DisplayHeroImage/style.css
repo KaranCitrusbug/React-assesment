@@ -53,3 +53,9 @@
     color: #ff70a6 !important;
     border: 1px solid #ff70a6;
 }
+@media screen and (max-width : 480px){
+  .hero-title h3{
+    font-size: 3rem;
+    line-height: 3.25rem;
+  }
+}

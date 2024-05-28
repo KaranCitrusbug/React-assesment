@@ -19,7 +19,6 @@ import { validation } from "../../../../utils/Validation";
 import "react-phone-input-2/lib/material.css";
 import "./index.css";
 
-
 const Index: React.FC = () => {
   const {
     register,
@@ -28,7 +27,7 @@ const Index: React.FC = () => {
     formState: { errors },
   } = useForm<SignUpProps>({
     resolver: yupResolver(validation),
-    mode: "onChange" 
+    mode: "onChange",
   });
   const navigate = useNavigate();
 
@@ -37,13 +36,11 @@ const Index: React.FC = () => {
     password,
     name,
   }) => {
-     createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    ).then((userCredential) => {
-      const user = userCredential.user;
-    });
+    createUserWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        const user = userCredential.user;
+      }
+    );
     navigate("/login");
   };
   return (
@@ -67,7 +64,9 @@ const Index: React.FC = () => {
                   className="form-control"
                   name="name"
                 />
-                {errors.name && <span className="error">{errors.name.message}</span>}
+                {errors.name && (
+                  <span className="error">{errors.name.message}</span>
+                )}
                 <br />
                 <CustomInput
                   type="email"
@@ -78,7 +77,9 @@ const Index: React.FC = () => {
                   className="form-control"
                   name="email"
                 />
-                {errors.email && <span className="error">{errors.email.message}</span>}
+                {errors.email && (
+                  <span className="error">{errors.email.message}</span>
+                )}
                 <br />
                 <Controller
                   name="phoneNumber"
@@ -91,7 +92,9 @@ const Index: React.FC = () => {
                         onChange={onChange}
                       />
                       {errors.phoneNumber && (
-                        <span className="error">{errors.phoneNumber.message}</span>
+                        <span className="error">
+                          {errors.phoneNumber.message}
+                        </span>
                       )}
                     </>
                   )}
@@ -106,7 +109,9 @@ const Index: React.FC = () => {
                   className="form-control"
                   name="password"
                 />
-                {errors.password && <span className="error">{errors.password.message}</span>}
+                {errors.password && (
+                  <span className="error">{errors.password.message}</span>
+                )}
                 <br />
                 <CustomInput
                   type="password"
@@ -118,7 +123,9 @@ const Index: React.FC = () => {
                   name="confirmPassword"
                 />
                 {errors.confirmPassword && (
-                  <span className="error">{errors.confirmPassword.message}</span>
+                  <span className="error">
+                    {errors.confirmPassword.message}
+                  </span>
                 )}
                 <br />
                 <CustomButton

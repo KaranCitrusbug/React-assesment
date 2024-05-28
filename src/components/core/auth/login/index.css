@@ -15,7 +15,7 @@
 .formField{
   padding: 5% 10%;
 }
-form {
+.LoginPage form {
   display: flex;
   gap: 10px;
 }
@@ -33,6 +33,6 @@ form {
   text-decoration: underline !important;
   color: blue !important;
 }
-p {
+.LoginPage  p {
   margin: 0;
 }

@@ -106,7 +106,7 @@ const AddProduct: React.FC<ModalProps> = ({
             },
           ]}
         >
-          <Input type="textarea" />
+          <Input.TextArea rows={3} />
         </Form.Item>
         <Form.Item
           name="img"

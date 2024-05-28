@@ -28,6 +28,7 @@ const DisplayProduct: React.FC = () => {
       onSnapshot(fetchProducts, function productsList(snapShort) {
         let newProduct: ProductType[] = [];
         snapShort.docs.forEach((products) => {
+  
           newProduct.push({
             id: products.id,
             name: products.data().name,
@@ -84,8 +85,8 @@ const DisplayProduct: React.FC = () => {
         <Spin />
       ) : (
         <Layout style={{ minHeight: "100%" }}>
-          <Layout>
-            <Sider width={200} style={{ background: "#fff" }}>
+          <Layout >
+            <Sider max-width={200}  style={{ background: "#fff" }}>
               <div style={{ padding: "10px" }}>
                 <h3>Categories</h3>
                 <Checkbox.Group onChange={handleCategoryChange}>
@@ -113,7 +114,7 @@ const DisplayProduct: React.FC = () => {
               >
                 <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
                   <Card
-                    products={currentProducts ? currentProducts : products}
+                    products={currentProducts}
                   />
                 </div>
               </Content>

@@ -87,7 +87,7 @@ const Login: React.FC = () => {
             <Link to="/" className="text-center ">
               Forgot Password?
             </Link>
-            <div className="d-flex justify-content-center">
+            <div className="d-md-flex justify-content-center">
               <p className="pe-1 ">Don't have an account? </p>
               <Link to="/signup">Create an account</Link>
             </div>

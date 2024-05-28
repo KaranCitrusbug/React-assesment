@@ -9,12 +9,13 @@ import "react-toastify/dist/ReactToastify.css";
 import 'react-phone-number-input/style.css'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; 
 
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-      <App />
+      <App  />
   </React.StrictMode>
 );
 

@@ -1,7 +1,7 @@
 .card{
     padding: 10px;
 }
-.card img{
+.shop-card img{
     max-height: 250px;
     object-fit: contain;
 }
@@ -30,11 +30,7 @@
     text-decoration: underline;
    
   }
-.card .card-body a p{
-    padding: 0 !important;
-    margin-bottom: 10px !important;
-   
-}
+
 .card .card-title{
     margin-bottom: 10px;
 }
