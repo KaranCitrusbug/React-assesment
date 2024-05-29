@@ -15,8 +15,13 @@
     font-weight: 600;
     
 }
+.cart-img{
+    height: 100%;
+}
 .cart-img img{
-    max-height: 200px !important;
+    max-height: 100px !important;
+    max-width: 100px !important;
+        
 }
 .cart-card .description{
     font-size: 16px !important;
@@ -37,4 +42,9 @@
 .cart-card span {
     font-weight: 100;
     font-size: 13px;
+}
+.cart-img button{
+    border-radius: 50%;
+    border: 1px solid gray;
+   
 }

@@ -5,21 +5,24 @@ import { ProductType } from "../../../types/ProductType";
 import CartItem from "./CartItem";
 import "./style.css";
 import { ExclamationOutlined } from "@ant-design/icons";
+import TotalBill from "./TotalBill";
 
 const BuyProduct: React.FC = () => {
   const cartItem = useSelector((state: RootState) => state.cart.cart);
   return (
     <div className="container">
-      {cartItem.length != 0 ? (
+      {cartItem.length !== 0 ? (
         <div className="row">
           <div className="col-8">
-            {cartItem.length != 0
+            {cartItem.length !== 0
               ? cartItem.map((product: ProductType) => (
+                <div key={product.id}>
                   <CartItem product={product} />
+                </div>
                 ))
               : " "}
           </div>
-          <div className="col-4">hello</div>
+          <div className="col-4"><TotalBill/></div>
         </div>
       ) : (
         <div>

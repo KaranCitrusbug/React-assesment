@@ -24,7 +24,7 @@ const Card: React.FC<CardProps> = ({ products }) => {
       {products.length != 0 ? (
         products.map((product) => {
           const cartDetail = cartItem.find((item) => item.id === product.id);
-          console.log(cartDetail)
+          
           return (
             <div className="col mt-3" key={product.id}>
               <div className="card shop-card h-100">
@@ -50,7 +50,7 @@ const Card: React.FC<CardProps> = ({ products }) => {
                   </div>
                   <div className="d-flex justify-content-between">
                     <p className="card-text">Quantity: </p>
-                    <p>{product.quantity}</p>
+                    <p> {cartDetail ? cartDetail?.quantity : product.quantity}</p>
                   </div>
                   <div className="d-flex justify-content-between flex-wrap ">
                     <button className="btn btn-warning m-1" >

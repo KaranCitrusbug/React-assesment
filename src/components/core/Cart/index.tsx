@@ -1,7 +1,7 @@
 import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
+import { faBagShopping , faCartShopping} from "@fortawesome/free-solid-svg-icons";
 
 import MainHeader from "../Home/Header/Index";
 import Footer from "../Home/Footer/Index";
@@ -15,7 +15,7 @@ const Index: React.FC = () => {
         <div className="cart-section ">
           <h2 className="text-center py-3 myCart">
             My Cart
-            <FontAwesomeIcon icon={faBagShopping} className="ms-3" />
+            <FontAwesomeIcon icon={faCartShopping } className="ms-3" />
           </h2>
           <BuyProduct/>
         </div>
