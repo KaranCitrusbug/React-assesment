@@ -39,7 +39,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="center-wrapper">
-      <div className="LoginPage row">
+      <div className="LoginPage row w-100">
         <div className="col-xl-6 col-lg-6 col-md-6 d-flex justify-content-center align-center">
           <div className="d-flex justify-content-center align-center">
             <img

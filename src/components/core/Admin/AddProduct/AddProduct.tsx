@@ -9,6 +9,7 @@ import { db } from "../../../../firebase";
 import { ModalProps } from "../../../../types/ModalProps";
 
 import "./style.css";
+import { Option as option } from "../../../../utils/ConstFile";
 
 const AddProduct: React.FC<ModalProps> = ({
   isModalOpen,
@@ -21,20 +22,6 @@ const AddProduct: React.FC<ModalProps> = ({
 
   const productData = collection(db, "products");
 
-  const option = [
-    {
-      value: "Men",
-      label: "Men",
-    },
-    {
-      value: "Women",
-      label: "Women",
-    },
-    {
-      value: "Kid",
-      label: "Kid",
-    },
-  ];
 
   const handleSelect = (
     option: SingleValue<{ value: string; label: string }>

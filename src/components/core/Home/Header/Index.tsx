@@ -13,21 +13,23 @@ import {
 import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
 
-import Images from "../../../../assets/AllImages";
-import CustomButton from "../../../UI/Button/Button";
-
-import { ConstValue } from "../../../../utils/ConstFile";
+import { useSelector } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 
-import "./style.css";
+import Images from "../../../../assets/AllImages";
+import CustomButton from "../../../UI/Button/Button";
 
-interface HeaderProps {
-  children: React.ReactNode;
-}
+import { RootState } from "../../../../types/StateType";
+
+import { ConstValue } from "../../../../utils/ConstFile";
+
+import "./style.css";
+import { HeaderProps } from "../../../../types/Headerprops";
+
 
 const Index: React.FC<HeaderProps> = ({ children }) => {
   const [user, setUser] = useState<any>(null);
@@ -43,6 +45,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
   const handleSignIn = () => {
     navigate("/login");
   };
+  const cartItem = useSelector((state: RootState) => state.cart.cart)
 
   const items: MenuProps["items"] = [
     {
@@ -63,7 +66,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
     //   ),
     // },
     {
-      key: "1",
+      key: "2",
       label: (
         <CustomButton
           type="button"
@@ -117,7 +120,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
             <NavLink to="/shop">
               <ShoppingOutlined /> Shop
             </NavLink>
-            {user && user.email === ConstValue.admin ? (
+            {user && user.email === ConstValue.Admin ? (
               <NavLink to="/admin/add-product">
                 <ProductOutlined /> Add Product
               </NavLink>
@@ -139,7 +142,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
                   Cart
                 </div>
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  0
+                  {cartItem.length}
                   <span className="visually-hidden">unread messages</span>
                 </span>
               </button>

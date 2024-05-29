@@ -1,8 +1,8 @@
 import React from 'react'
 
 import { Carousel } from 'react-responsive-carousel'
-import images from '../../../../assets/AllImages'
 
+import images from '../../../../assets/AllImages'
 
 import './style.css'
 

@@ -1,11 +1,7 @@
-import React from 'react'
-import SignUpComponent from '../../../components/core/auth/signUp'
-const Index = () => {
-  return (
-   <>
-    <SignUpComponent/>
-   </>
-  )
-}
+import React from "react";
+import SignUpComponent from "../../../components/core/auth/signUp";
+const Index : React.FC= () => {
+  return <SignUpComponent />;
+};
 
-export default Index
+export default Index;

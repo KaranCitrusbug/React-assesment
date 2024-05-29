@@ -1,7 +1,7 @@
 import React from 'react'
 import LoginComponent from "../../../components/core/auth/login"
 
-const index = () => {
+const index : React.FC = () => {
   return (
     <LoginComponent/>
   )

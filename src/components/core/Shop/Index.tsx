@@ -1,4 +1,5 @@
 import React from 'react'
+
 import MainHeader from  "../Home/Header/Index"
 import CarouselComponent from "./Carousel/index"
 import DisplayProduct from './DisplayProduct/Index'

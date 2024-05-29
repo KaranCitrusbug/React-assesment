@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
+
 import { Button, Popconfirm, Spin, Table, TableColumnsType } from "antd";
 import {
   collection,
   deleteDoc,
   doc,
-  getDocs,
   onSnapshot,
   query,
 } from "firebase/firestore";
 import { db } from "../../../../firebase";
-import { toast } from "react-toastify";
+
 import EditProduct from "./EditProduct";
 import { ProductType } from "../../../../types/ProductType";
+
+import { toast } from "react-toastify";
 
 const ProductListing: React.FC = () => {
   const [products, setProducts] = useState<ProductType[]>([]);

@@ -27,7 +27,10 @@ const cartReducer = (
       if (existingItemIndex !== -1) {
         const updatedCart = [...state.cart];
         updatedCart[existingItemIndex].quantity -= 1;
+        updatedCart[existingItemIndex].totalProduct += 1;
+      
         const updateAmount = state.totalAmount + action.payload.price;
+        console.log(updateAmount)
         return {
           ...state,
           cart: updatedCart,
@@ -37,6 +40,9 @@ const cartReducer = (
         const updateAmount = state.totalAmount + action.payload.price;
 
         action.payload.quantity -= 1;
+
+        action.payload.totalProduct = 1;
+
         return {
           ...state,
           cart: [...state.cart, { ...action.payload }],
@@ -47,29 +53,43 @@ const cartReducer = (
       const removedItem = state.cart.find(
         (item) => item.id === action.payload.productId
       );
-      
-      // const updatedTotalAmount = state.totalAmount - (removedItem.price * action.payload.quantity);
-      return {
+    
+      if(removedItem){
+
+        const updatedTotalAmount = state.totalAmount - (removedItem.price * action.payload.quantity);
+         return {
         ...state,
         cart: state.cart.filter((item) => item.id !== action.payload.productId),
-        totalAmount: 1,
+        totalAmount: updatedTotalAmount,
       };
+      }
+      else{
+        return {
+          ...state,
+          cart: [...state.cart],
+          totalAmount: state.totalAmount,
+        };
+      }
+  
+     
     case INCREASE_QUANTITY:
       const existingItemIncrease = state.cart.findIndex(
         (item) => item.id === action.payload.id
       );
       if (existingItemIncrease !== -1) {
         const updatedCart = [...state.cart];
-        updatedCart[existingItemIncrease].quantity += 1;
-        //   updatedCart[existingItemIncrease].rating.count -= 1;
-        const updateAmount = state.totalAmount + action.payload.price;
+        updatedCart[existingItemIncrease].quantity -= 1;
+        updatedCart[existingItemIncrease].totalProduct += 1;
+             const updateAmount = state.totalAmount + action.payload.price;
         return {
           ...state,
           cart: updatedCart,
           totalAmount: updateAmount,
         };
       }
-      return state;
+      else{
+        return state;
+      }
 
     case DECREASE_QUANTITY:
       const existingItemDecrease = state.cart.findIndex(
@@ -77,8 +97,8 @@ const cartReducer = (
       );
       if (existingItemDecrease !== -1) {
         const updatedCart = [...state.cart];
-        updatedCart[existingItemDecrease].quantity -= 1;
-        //   updatedCart[existingItemDecrease].rating.count += 1;
+        updatedCart[existingItemDecrease].quantity += 1;
+        updatedCart[existingItemDecrease].totalProduct -= 1;
         const decreaseAmount = state.totalAmount - action.payload.price;
         return {
           ...state,
@@ -91,7 +111,7 @@ const cartReducer = (
     case BUY_NOW_PRODUCT:
       return {
         ...state,
-        cart: [{ ...action.payload, quantity: 1 }],
+        // cart: [{ ...action.payload, quantity: 1 }],
         totalAmount: action.payload.price,
       };
     default:

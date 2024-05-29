@@ -45,7 +45,7 @@ const Index: React.FC = () => {
   };
   return (
     <div className="center-wrapper">
-      <div className="row signUp">
+      <div className="row signUp w-100">
         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
           <div>
             <h1>Sign Up</h1>

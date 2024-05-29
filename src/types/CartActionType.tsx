@@ -1,3 +1,4 @@
+import { Product } from "./CartStateProps";
 import { ProductType } from "./ProductType";
 
 // Define action type constants
@@ -11,7 +12,7 @@ export const BUY_NOW_PRODUCT = 'BUY_NOW_PRODUCT';
 
 interface AddToCartAction {
   type: typeof ADD_TO_CART;
-  payload: ProductType;
+  payload: Product;
 }
 
 interface RemoveFromCartAction {

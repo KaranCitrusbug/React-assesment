@@ -1,13 +1,38 @@
-import React from "react";
-import { ProductType } from "../../../types/ProductType";
-import "./style.css";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../types/StateType";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-interface CartItemProps {
-  product: ProductType;
-}
+import { RootState } from "../../../types/StateType";
+import { CartItemProps } from "../../../types/CartItemProps";
+import {
+  decreaseQuantity,
+  increaseQuantity,
+  removeFromCart,
+} from "../../../store/cartReducer/cartAction";
+
+import "./style.css";
+
 const CartItem: React.FC<CartItemProps> = ({ product }) => {
+  const [buyingQuantity, setBuyingQuantity] = useState<number>(0);
+  const cartItem = useSelector((state: RootState) => state.cart.cart);
+  const dispatch = useDispatch();
+
+  const handleRemove = (id: string, buyingQuantity: number) => {
+    dispatch(removeFromCart(id, buyingQuantity));
+  };
+
+  const handleIncreaseQuantity = (price: number, id: string) => {
+    dispatch(increaseQuantity(price, id));
+  };
+  const handleDecreaseQuantity =(price: number, id: string) => {
+    dispatch(decreaseQuantity(price, id));
+  };
+
+  useEffect(() => {
+    const findProduct = cartItem.find((item) => item.id === product.id);
+    if (findProduct) {
+      setBuyingQuantity(findProduct.totalProduct);
+    }
+  }, [cartItem]);
 
   return (
     <div className="card cart-card mb-3" key={product.id}>
@@ -38,12 +63,31 @@ const CartItem: React.FC<CartItemProps> = ({ product }) => {
         </div>
         <div className="col-md-2">
           <div className="d-flex flex-column justify-content-between h-100">
-            <div className="d-flex gap-1">
-              <button className="btn btn-light">+</button>
-              <input type="text" className="form-control"  />
-              <button className="btn btn-light">-</button>
+            <div className="d-flex gap-1 select-quantity">
+              <button
+                className={`btn btn-outline-secondary ${product.quantity === 0 ? "disabled" : ""}`}
+                onClick={() => {
+                  handleIncreaseQuantity(product.price, product.id);
+                }}
+              >
+                +
+              </button>
+              <input
+                type="text"
+                className="form-control"
+                value={buyingQuantity}
+              />
+              <button className={`btn btn-outline-secondary ${buyingQuantity === 1 ? "disabled" : ""}`}
+               onClick={() => {
+                handleDecreaseQuantity(product.price, product.id);
+              }}>-</button>
             </div>
-            <button className="btn btn-primary">Remove</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => handleRemove(product.id, buyingQuantity)}
+            >
+              Remove
+            </button>
           </div>
         </div>
       </div>

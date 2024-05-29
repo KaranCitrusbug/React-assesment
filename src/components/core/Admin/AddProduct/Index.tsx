@@ -4,6 +4,7 @@ import CustomButton from "../../../UI/Button/Button";
 import MainHeader from "../../Home/Header/Index";
 import AddProduct from "./AddProduct";
 import ProductListing from "./ProductListing";
+
 import "./style.css";
 
 const Index: React.FC = () => {

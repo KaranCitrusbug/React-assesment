@@ -4,7 +4,6 @@ import "./style.css"
 const CustomInput: FC<CustomInputProps> = ({
     placeholder,
     register,
-    error,
     type,
     label,
     className,name

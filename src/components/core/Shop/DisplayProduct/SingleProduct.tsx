@@ -5,7 +5,6 @@ import {
   collection,
   doc,
   getDoc,
-  getDocs,
   onSnapshot,
   query,
   where,
@@ -13,14 +12,14 @@ import {
 import { db } from "../../../../firebase";
 
 import { ThunderboltOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 import MainHeader from "../../../core/Home/Header/Index";
 import Footer from "../../Home/Footer/Index";
+import Card from "./Card";
 import { ProductType } from "../../../../types/ProductType";
-import { Spin } from "antd";
 
 import "./style.css";
-import Card from "./Card";
 
 const SingleProduct: React.FC = () => {
   const userId = useParams<string>();
@@ -118,7 +117,7 @@ const SingleProduct: React.FC = () => {
               </div>
             </div>
             <h2 className="mb-5">You might be interested in</h2>
-            {relatedProducts.length != 0 ? (
+            {relatedProducts.length !== 0 ? (
               <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 mb-5">
                 <Card products={relatedProducts} />
               </div>

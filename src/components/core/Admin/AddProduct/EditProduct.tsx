@@ -1,10 +1,13 @@
-import { Form, Input, InputNumber, Modal } from "antd";
 import React, { useEffect, useState } from "react";
-import { ModalProps } from "../../../../types/ModalProps";
 import Select, { SingleValue } from "react-select";
-import { EditProductProps } from "../../../../types/EditProductType";
+
+import { Form, Input, InputNumber, Modal } from "antd";
+
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase";
+
+import { EditProductProps } from "../../../../types/EditProductType";
+
 import { toast } from "react-toastify";
 
 const EditProduct: React.FC<EditProductProps> = ({
@@ -17,7 +20,7 @@ const EditProduct: React.FC<EditProductProps> = ({
     useState<SingleValue<{ value: string; label: string }>>(null);
   const [form] = Form.useForm();
 
-  console.log(initialValue)
+
   const option = [
     {
       value: "Men",

@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import {
   InstagramOutlined,
   TwitterOutlined,
   WhatsAppOutlined,
   YoutubeOutlined,
 } from "@ant-design/icons";
+
 import './style.css'
 
 const Footer : React.FC= () => {

@@ -1,6 +1,8 @@
-import React, { Children, ReactNode } from "react";
-import "./style.css";
+import React  from "react";
+
 import { Link } from "react-router-dom";
+
+import "./style.css";
 
 const Index: React.FC = () => {
   return (
