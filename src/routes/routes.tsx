@@ -11,6 +11,7 @@ const AddProduct =lazy(()=> import('../pages/Admin/Index'))
 const Blogs =lazy(()=>import("../pages/Feedback/Index"))
 const Shop =lazy(()=> import("../pages/Shop/Index"))
 const SingleProduct = lazy(()=> import('../pages/SingleProduct/Index'))
+const ProfilePage = lazy(()=> import('../pages/Profile/Index'))
 
 const RoutesPage:React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const RoutesPage:React.FC = () => {
             <Route path='/blog' Component={Blogs}></Route>
             <Route path='/shop' Component={Shop}></Route>
             <Route path="shop/:id" Component={SingleProduct}></Route>
+            <Route path="/profile" Component={ProfilePage}></Route>
             <Route  path='*' Component={PageNotFound}></Route>
             <Route path='/admin/add-product' Component={AddProduct}></Route>
           </Routes>

@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 import { Button, Popconfirm, Spin, Table, TableColumnsType } from "antd";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  onSnapshot,
-  query,
-} from "firebase/firestore";
-import { db } from "../../../../firebase";
 
-import EditProduct from "./EditProduct";
+import ProductForm from "./ProductForm";
+
 import { ProductType } from "../../../../types/ProductType";
+import { firebaseService } from "../../../../services/FirebaseService";
 
-import { toast } from "react-toastify";
+import "./style.css";
 
 const ProductListing: React.FC = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -32,45 +26,24 @@ const ProductListing: React.FC = () => {
     setModalIsOpen(false);
   };
 
-  const fetchProducts = async () => {
-    try {
-      const fetchProducts = query(collection(db, "products"));
-      onSnapshot(fetchProducts, function productsList(snapShort) {
-        let newProduct: ProductType[] = [];
-        snapShort.docs.forEach((products) => {
-          newProduct.push({
-            id: products.id,
-            name: products.data().name,
-            img: products.data().img,
-            category: products.data().category,
-            description: products.data().description,
-            price: products.data().price,
-            quantity: products.data().quantity,
-          });
-        });
-        setProducts(newProduct);
-      });
-    } catch (error) {
-      console.error("Error fetching products: ", error);
-    } finally {
+  const fetchProductsData = async () => {
+    setLoading(true);
+    firebaseService.fetchProducts((newProducts) => {
+      setProducts(newProducts);
       setLoading(false);
+    });
+  };
+  const handleEditProduct = async (values: ProductType) => {
+    if (initialValue) {
+      firebaseService.editProductData(values, initialValue.id);
     }
   };
   const handleDelete = async (id: string) => {
-    try {
-      const productDelete = doc(db, "products", id);
-      await deleteDoc(productDelete);
-      toast.error("Product deleted successfully", {
-        autoClose: 2000,
-      });
-    } catch (error) {
-      console.error("Error deleting product: ", error);
-      toast.error("Failed to delete product");
-    }
+    await firebaseService.handleDeleteData(id);
   };
+
   const handleEdit = (id: string) => {
     const product = products.find((product) => product.id === id);
-
     if (product) {
       setInitialValue(product);
       handleAddProduct();
@@ -88,30 +61,26 @@ const ProductListing: React.FC = () => {
       title: "Category",
       dataIndex: "category",
       key: "category",
-      width:150,
-      render: (category :{
-        value: string;
-        label: string;
-    }) => (
+      width: 150,
+      render: (category: { value: string; label: string }) => (
         <span>{category.value}</span>
       ),
       filters: [
         {
-          text:'Men',
-          value: 'Men',
+          text: "Men",
+          value: "Men",
         },
         {
-          text:'Women',
-          value: 'Women',
+          text: "Women",
+          value: "Women",
         },
         {
-          text:'Kid',
-          value: 'Kid',
+          text: "Kid",
+          value: "Kid",
         },
       ],
-      filterMultiple:false,
-      onFilter:(value ,record) =>record.category.value.indexOf(value) ===0,
-      
+      filterMultiple: false,
+      onFilter: (value, record) => record.category.value.indexOf(value) === 0,
     },
     {
       title: "Image",
@@ -125,25 +94,25 @@ const ProductListing: React.FC = () => {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      sorter:(a,b) => a.price - b.price
+      sorter: (a, b) => a.price - b.price,
     },
     {
       title: "Quantity",
       dataIndex: "quantity",
       key: "quantity",
-      sorter:(a,b) => a.quantity - b.quantity
+      sorter: (a, b) => a.quantity - b.quantity,
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
-      width:400,
+      width: 400,
     },
     {
       title: "Action",
       key: "action",
       width: 200,
-     
+
       render: (products: ProductType) => (
         <span>
           <Button
@@ -166,7 +135,7 @@ const ProductListing: React.FC = () => {
   ];
 
   useEffect(() => {
-    fetchProducts();
+    fetchProductsData();
   }, []);
 
   return (
@@ -181,17 +150,19 @@ const ProductListing: React.FC = () => {
             pagination={{
               pageSize: pageSize,
               showSizeChanger: true,
-              pageSizeOptions: ['5', '10','15'],
+              pageSizeOptions: ["5", "10", "15"],
               onShowSizeChange: (current, size) => setPageSize(size),
             }}
             scroll={{ x: 1200 }}
             className="mt-5"
           />
-          <EditProduct
+          <ProductForm
             isModalOpen={modalIsOpen}
-            handleCancel={handleCancel}
             handleOk={handleOk}
+            handleCancel={handleCancel}
             initialValue={initialValue}
+            onSubmit={handleEditProduct}
+            okText="Edit Product"
           />
         </>
       )}

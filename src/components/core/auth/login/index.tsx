@@ -4,17 +4,19 @@ import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
-import { toast } from "react-toastify";
 
 import CustomButton from "../../../UI/Button/Button";
-import { loginProps } from "../../../../types/loginType";
 import CustomInput from "../../../UI/InputField/input";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { loginValidation } from "../../../../utils/Validation";
+import { loginProps } from "../../../../types/loginType";
 
+import { loginValidation } from "../../../../utils/Validation";
+import { ToastFail, ToastSuccess } from "../../../../utils/ToastMessage";
 import images from "../../../../assets/AllImages";
+
 import "./index.css";
 
 const Login: React.FC = () => {
@@ -30,16 +32,16 @@ const Login: React.FC = () => {
   const onSubmit: SubmitHandler<loginProps> = async (data) => {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
-      toast.success("Login successfully");
+      ToastSuccess("Login successfully");
       navigate("/");
     } catch (err) {
-      toast.error("Please check your credential");
+      ToastFail("Please check your credential");
     }
   };
 
   return (
     <div className="center-wrapper">
-      <div className="LoginPage row w-100">
+      <div className=" row LoginPage">
         <div className="col-xl-6 col-lg-6 col-md-6 d-flex justify-content-center align-center">
           <div className="d-flex justify-content-center align-center">
             <img

@@ -18,7 +18,7 @@ const PostList: React.FC = () => {
   const fetchPosts = async () => {
     try {
       const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/comments?_page=${page}&_limit=${POSTS_PER_PAGE}`
+        `${process.env.REACT_APP_FEEDBACK_API_ENDPOINT}?_page=${page}&_limit=${POSTS_PER_PAGE}`
       );
       const newPosts = response.data;
 

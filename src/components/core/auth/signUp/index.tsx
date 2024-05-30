@@ -33,8 +33,7 @@ const Index: React.FC = () => {
 
   const onSubmit: SubmitHandler<SignUpProps> = async ({
     email,
-    password,
-    name,
+    password,   
   }) => {
     createUserWithEmailAndPassword(auth, email, password).then(
       (userCredential) => {
@@ -57,15 +56,41 @@ const Index: React.FC = () => {
               <div>
                 <CustomInput
                   type="text"
-                  label="Name: "
+                  label="User Name: "
                   placeholder="Enter your Name"
                   register={register}
                   error={errors}
                   className="form-control"
-                  name="name"
+                  name="userName"
                 />
-                {errors.name && (
-                  <span className="error">{errors.name.message}</span>
+                {errors.userName && (
+                  <span className="error">{errors.userName.message}</span>
+                )}
+                <br />
+                <CustomInput
+                  type="text"
+                  label="First Name: "
+                  placeholder="Enter your Name"
+                  register={register}
+                  error={errors}
+                  className="form-control"
+                  name="firstName"
+                />
+                {errors.firstName && (
+                  <span className="error">{errors.firstName.message}</span>
+                )}
+                <br />
+                <CustomInput
+                  type="text"
+                  label="Last Name: "
+                  placeholder="Enter your Name"
+                  register={register}
+                  error={errors}
+                  className="form-control"
+                  name="lastName"
+                />
+                {errors.lastName && (
+                  <span className="error">{errors.lastName.message}</span>
                 )}
                 <br />
                 <CustomInput

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  onSnapshot,
-  query,
-} from "firebase/firestore";
-import { db } from "../../../../firebase";
+
 import { Layout, Checkbox, Row, Col, Spin, Pagination, Input } from "antd";
 
+import { firebaseService } from "../../../../services/FirebaseService";
+import { ToastFail } from "../../../../utils/ToastMessage";
 import { ProductType } from "../../../../types/ProductType";
 import Card from "./Card";
 
@@ -18,8 +15,7 @@ const { Search } = Input;
 const DisplayProduct: React.FC = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [filteredProducts, setFilteredProducts] =
-    useState<ProductType[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductType[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -27,25 +23,12 @@ const DisplayProduct: React.FC = () => {
 
   const fetchProducts = async () => {
     try {
-      const fetchProducts = query(collection(db, "products"));
-      onSnapshot(fetchProducts, function productsList(snapShort) {
-        let newProduct: ProductType[] = [];
-        snapShort.docs.forEach((products) => {
-          newProduct.push({
-            id: products.id,
-            name: products.data().name,
-            img: products.data().img,
-            category: products.data().category,
-            description: products.data().description,
-            price: products.data().price,
-            quantity: products.data().quantity,
-          });
-        });
+      firebaseService.fetchProducts((newProduct) => {
         setProducts(newProduct);
         setFilteredProducts(newProduct);
       });
     } catch (error) {
-      console.error("Error fetching products: ", error);
+      ToastFail("Error fetching products: " + error);
     } finally {
       setLoading(false);
     }
@@ -102,12 +85,12 @@ const DisplayProduct: React.FC = () => {
           <Layout>
             <Sider max-width={200} style={{ background: "#fff" }}>
               <div style={{ padding: "10px" }}>
-              <Search
+                <Search
                   placeholder="Search products"
                   onSearch={handleSearch}
                   enterButton
                 />
-                <h3 className="mt-3" >Categories</h3>
+                <h3 className="mt-3">Categories</h3>
                 <Checkbox.Group onChange={handleCategoryChange}>
                   <Row>
                     <Col span={24}>
@@ -121,11 +104,9 @@ const DisplayProduct: React.FC = () => {
                     </Col>
                   </Row>
                 </Checkbox.Group>
-               
               </div>
             </Sider>
             <Layout style={{ padding: "0 24px 24px" }}>
-               
               <Content
                 style={{
                   padding: 24,

@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 
-import CustomButton from "../../../UI/Button/Button";
+import { db } from "../../../../firebase"
+import { addDoc, collection } from "firebase/firestore";
+
 import MainHeader from "../../Home/Header/Index";
-import AddProduct from "./AddProduct";
+import ProductForm from "./ProductForm";
 import ProductListing from "./ProductListing";
+import CustomButton from "../../../UI/Button/Button";
 
 import "./style.css";
+import { ProductType } from "../../../../types/ProductType";
+import { firebaseService } from "../../../../services/FirebaseService";
 
 const Index: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const productData = collection(db, "products");
 
   const handleAddProduct = () => {
     setModalIsOpen(true);
@@ -18,6 +24,9 @@ const Index: React.FC = () => {
   };
   const handleCancel = () => {
     setModalIsOpen(false);
+  };
+  const handleProduct = async (values: ProductType) => {
+    firebaseService.addProductData(values)
   };
 
   return (
@@ -35,10 +44,13 @@ const Index: React.FC = () => {
             onClick={handleAddProduct}
           />
         </div>
-        <AddProduct
+
+        <ProductForm
           isModalOpen={modalIsOpen}
           handleOk={handleOk}
           handleCancel={handleCancel}
+          onSubmit={handleProduct}
+          okText="Add Product"
         />
         <ProductListing />
       </div>

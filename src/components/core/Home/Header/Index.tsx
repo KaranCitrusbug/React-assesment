@@ -24,11 +24,12 @@ import Images from "../../../../assets/AllImages";
 import CustomButton from "../../../UI/Button/Button";
 
 import { RootState } from "../../../../types/StateType";
+import { HeaderProps } from "../../../../types/Headerprops";
 
 import { ConstValue } from "../../../../utils/ConstFile";
+import { ToastFail } from "../../../../utils/ToastMessage";
 
 import "./style.css";
-import { HeaderProps } from "../../../../types/Headerprops";
 
 
 const Index: React.FC<HeaderProps> = ({ children }) => {
@@ -38,8 +39,8 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-    } catch (error) {
-      console.error("Error signing out:", error);
+    } catch (error : any) {
+      ToastFail("Error signing out:" + error);
     }
   };
   const handleSignIn = () => {
@@ -51,8 +52,8 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
     {
       key: "1",
       label: (
-        <Link rel="noopener noreferrer" to="/" className="btn">
-          Change Password
+        <Link rel="noopener noreferrer" to="/profile" className="btn">
+         Profile
         </Link>
       ),
     },

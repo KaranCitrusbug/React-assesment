@@ -12,6 +12,7 @@ const CustomInput: FC<CustomInputProps> = ({
     <>
         <label>{label}</label>
         <input type={type} placeholder={placeholder} {...register(name)}  className={`${className}`}/>
+        
     </>
   )
 }

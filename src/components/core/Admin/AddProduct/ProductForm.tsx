@@ -1,27 +1,29 @@
-import React, { useState } from "react";
-import { Form, Input, InputNumber, Modal } from "antd";
+// ProductForm.tsx
 
+import React, { useEffect, useState } from "react";
 import Select, { SingleValue } from "react-select";
 
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../../../firebase";
+import { Form, Input, InputNumber, Modal } from "antd";
 
-import { ModalProps } from "../../../../types/ModalProps";
+import { ProductFromProps } from "../../../../types/ProductFormType";
+import { Option } from "../../../../utils/ConstFile";
+import { ToastFail } from "../../../../utils/ToastMessage";
 
 import "./style.css";
-import { Option as option } from "../../../../utils/ConstFile";
+import { ProductType } from "../../../../types/ProductType";
 
-const AddProduct: React.FC<ModalProps> = ({
+const ProductForm: React.FC<ProductFromProps> = ({
   isModalOpen,
   handleOk,
   handleCancel,
+  initialValue,
+  onSubmit,
+  okText,
 }) => {
   const [selectedOption, setSelectedOption] =
     useState<SingleValue<{ value: string; label: string }>>(null);
+
   const [form] = Form.useForm();
-
-  const productData = collection(db, "products");
-
 
   const handleSelect = (
     option: SingleValue<{ value: string; label: string }>
@@ -30,43 +32,56 @@ const AddProduct: React.FC<ModalProps> = ({
     form.setFieldsValue({ category: option });
   };
 
-  const handleProduct = () => {
-    form
-      .validateFields()
-      .then(async (values) => {
-        handleOk();
-        
-        await addDoc(productData, {
-          name: values.name,
-          description: values.description,
-          img: values.img,
-          id: Date.now().toString(),
-          category: selectedOption,
-          price: values.price,
-          quantity: values.quantity,
-        });
-
-        form.resetFields();
-        setSelectedOption(null);
-      })
-      .catch((info) => {
-        console.log("Validate Failed:", info);
-      });
-  };
-  const handleClose = () => {
+  const handleAddClose = () => {
     form.resetFields();
     handleCancel();
   };
 
+  const handleClose = () => {
+    handleCancel();
+  };
+  const handleAddFinish = () =>{
+    form.validateFields().then((values: ProductType) => {
+      onSubmit(values);
+      form.resetFields();
+      setSelectedOption(null);
+      handleOk();
+    }).catch((info:string) => {
+      ToastFail(info);
+    });
+  }
+
+  const handleFinish = () => {
+    form.validateFields().then((values : ProductType) => {
+      onSubmit(values);
+      setSelectedOption(null);
+      handleOk();
+    }).catch((info) => {
+      ToastFail(info);
+    });
+  };
+  useEffect(() => {
+    if (initialValue) {
+      const selectedCategory = Option.find(
+        (option) => option.value === initialValue.category.value
+      );
+      setSelectedOption(selectedCategory || null);
+      form.setFieldsValue({
+        ...initialValue,
+        category: selectedCategory,
+      });
+    }
+  }, [initialValue]);
+
   return (
     <Modal
-      title="Add Product"
+      title={okText === "Add Product" ? "Add Product" : "Edit Product"}
       open={isModalOpen}
-      onOk={handleProduct}
-      onCancel={handleClose}
+      onOk={okText === "Add Product" ? handleAddFinish : handleFinish}
+      onCancel={okText === "Add Product" ? handleAddClose : handleClose}
       centered
       focusTriggerAfterClose
-      okText="Add Product"
+      okText={okText}
       okButtonProps={{ className: "okButton" }}
       cancelButtonProps={{ className: "cancelButton" }}
     >
@@ -75,10 +90,7 @@ const AddProduct: React.FC<ModalProps> = ({
           label="Product Name:"
           name="name"
           rules={[
-            {
-              required: true,
-              message: "Please enter name of the product!",
-            },
+            { required: true, message: "Please enter name of the product!" },
           ]}
         >
           <Input />
@@ -99,10 +111,7 @@ const AddProduct: React.FC<ModalProps> = ({
           name="img"
           label="Product URL:"
           rules={[
-            {
-              required: true,
-              message: "Please enter URL of the product!",
-            },
+            { required: true, message: "Please enter URL of the product!" },
           ]}
         >
           <Input />
@@ -111,10 +120,7 @@ const AddProduct: React.FC<ModalProps> = ({
           name="price"
           label="Product Price:"
           rules={[
-            {
-              required: true,
-              message: "Please enter price of the product!",
-            },
+            { required: true, message: "Please enter price of the product!" },
             { type: "number", min: 0, message: "Price cannot be negative!" },
           ]}
         >
@@ -150,7 +156,7 @@ const AddProduct: React.FC<ModalProps> = ({
           <Select
             value={selectedOption}
             onChange={handleSelect}
-            options={option}
+            options={Option}
             isClearable
           />
         </Form.Item>
@@ -159,4 +165,4 @@ const AddProduct: React.FC<ModalProps> = ({
   );
 };
 
-export default AddProduct;
+export default ProductForm;

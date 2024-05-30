@@ -8,8 +8,8 @@ import { ProductType } from "../../../../types/ProductType";
 import { RootState } from "../../../../types/StateType";
 import { addToCart } from "../../../../store/cartReducer/cartAction";
 
-import { toast } from "react-toastify";
 import { CardProps } from "../../../../types/CartProductProps";
+import { ToastSuccess } from "../../../../utils/ToastMessage";
 
 
 const Card: React.FC<CardProps> = ({ products }) => {
@@ -18,7 +18,7 @@ const Card: React.FC<CardProps> = ({ products }) => {
   
   const handleBuyProduct = (product : ProductType) =>[
     dispatch(addToCart(product)),
-    toast.success("Product added to cart")
+    ToastSuccess("Product added to cart")
   ]
 
   return (
