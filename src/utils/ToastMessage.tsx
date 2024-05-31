@@ -7,7 +7,7 @@ export const ToastSuccess = (message: string) => {
 };
 
 export const ToastFail = (message: string) => {
-    toast.warning(message,{
+    toast.error(message,{
       autoClose :2000
     })
   };

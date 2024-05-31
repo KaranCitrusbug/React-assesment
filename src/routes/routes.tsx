@@ -1,4 +1,5 @@
 import React, { Suspense, lazy } from 'react'
+
 import { BrowserRouter, Route , Routes } from 'react-router-dom'
 import Loading from '../pages/loading/loading'
 
@@ -12,6 +13,9 @@ const Blogs =lazy(()=>import("../pages/Feedback/Index"))
 const Shop =lazy(()=> import("../pages/Shop/Index"))
 const SingleProduct = lazy(()=> import('../pages/SingleProduct/Index'))
 const ProfilePage = lazy(()=> import('../pages/Profile/Index'))
+const TokenComponent = lazy(() => import('../components/core/auth/AuthToken'))
+const ForgotPassword = lazy(() => import('../pages/ForgotPassword/Index') )
+const ChangePassword = lazy(()=> import('../pages/ChangePassword/Index'))
 
 const RoutesPage:React.FC = () => {
   return (
@@ -21,6 +25,9 @@ const RoutesPage:React.FC = () => {
             <Route  path='/' Component={HomePage}></Route>
             <Route  path='/login' Component={Login}></Route>
             <Route  path='/signup' Component={SignUp}></Route>
+            <Route  path='/invited/signup/:token' Component={TokenComponent}></Route>
+            <Route  path='/forgotPassword' Component={ForgotPassword}></Route>
+            <Route  path='/reset/password/:token' Component={ChangePassword}></Route>
             <Route path='/cart' Component={Cart}></Route>
             <Route path='/blog' Component={Blogs}></Route>
             <Route path='/shop' Component={Shop}></Route>

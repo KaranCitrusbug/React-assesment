@@ -1,26 +1,25 @@
 //  email and password fields.
-import React from "react";
-
-import { useForm, SubmitHandler } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../../firebase";
-
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import CustomButton from "../../../UI/Button/Button";
 import CustomInput from "../../../UI/InputField/input";
 import { loginProps } from "../../../../types/loginType";
-
 import { loginValidation } from "../../../../utils/Validation";
 import { ToastFail, ToastSuccess } from "../../../../utils/ToastMessage";
 import images from "../../../../assets/AllImages";
+import { loginUser } from "../../../../services/AuthService";
+import { login } from "../../../../store/AuthReducer/authAction";
 
 import "./index.css";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+ 
 
   const {
     register,
@@ -31,13 +30,28 @@ const Login: React.FC = () => {
   });
   const onSubmit: SubmitHandler<loginProps> = async (data) => {
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-      ToastSuccess("Login successfully");
-      navigate("/");
+      const loginCredential = await loginUser(data.email,data.password)
+      const loginUserDetail = JSON.stringify(loginCredential.payload.tokens)
+      dispatch(login(data.email))
+      localStorage.setItem("accessToken",loginUserDetail)
+      ToastSuccess("Login successfully")
+      
+      navigate('/')
+  
     } catch (err) {
-      ToastFail("Please check your credential");
+      ToastFail("Please check your credential" + err);
     }
   };
+
+ useEffect(()=>{
+  const user = localStorage.getItem("accessToken")
+  if(user){
+    navigate('/')
+    ToastSuccess("You are already logged in")
+  }
+
+
+ },[])
 
   return (
     <div className="center-wrapper">
@@ -86,7 +100,7 @@ const Login: React.FC = () => {
                 id="btn"
               />
             </div>
-            <Link to="/" className="text-center ">
+            <Link to="/forgotPassword" className="text-center ">
               Forgot Password?
             </Link>
             <div className="d-md-flex justify-content-center">

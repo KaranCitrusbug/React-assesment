@@ -1,44 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+
+
+import type { MenuProps } from "antd";
+import { Dropdown, Space } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-
-import { auth } from "../../../../firebase";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-
+import { useDispatch, useSelector } from "react-redux";
 import {
   HomeOutlined,
   ProductOutlined,
   ShoppingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Dropdown, Space } from "antd";
-
-import { useSelector } from "react-redux";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCartShopping,
-} from "@fortawesome/free-solid-svg-icons";
-
 import Images from "../../../../assets/AllImages";
 import CustomButton from "../../../UI/Button/Button";
-
 import { RootState } from "../../../../types/StateType";
 import { HeaderProps } from "../../../../types/Headerprops";
-
 import { ConstValue } from "../../../../utils/ConstFile";
 import { ToastFail } from "../../../../utils/ToastMessage";
+import { logout } from "../../../../store/AuthReducer/authAction";
 
 import "./style.css";
 
 
 const Index: React.FC<HeaderProps> = ({ children }) => {
-  const [user, setUser] = useState<any>(null);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+  const loginUser = useSelector((state:RootState ) => state.auth)
+console.log(loginUser.isUserLoggedIn)
+  const cartItem = useSelector((state: RootState) => state.cart.cart)
+  const dispatch = useDispatch()
   const handleSignOut = async () => {
     try {
-      await signOut(auth);
+      dispatch(logout())
     } catch (error : any) {
       ToastFail("Error signing out:" + error);
     }
@@ -46,7 +43,6 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
   const handleSignIn = () => {
     navigate("/login");
   };
-  const cartItem = useSelector((state: RootState) => state.cart.cart)
 
   const items: MenuProps["items"] = [
     {
@@ -72,20 +68,15 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
         <CustomButton
           type="button"
           className="btn"
-          buttonLabel={user !== null ? "Logout" : "Login"}
+          buttonLabel={loginUser.isUserLoggedIn ? "Logout" : "Login"}
           id="button"
-          onClick={user !== null ? handleSignOut : handleSignIn}
+          onClick={loginUser.isUserLoggedIn ? handleSignOut : handleSignIn}
         />
       ),
     },
   ];
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
+
 
   return (
     <>
@@ -121,7 +112,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
             <NavLink to="/shop">
               <ShoppingOutlined /> Shop
             </NavLink>
-            {user && user.email === ConstValue.Admin ? (
+            {loginUser && loginUser.user === ConstValue.Admin ? (
               <NavLink to="/admin/add-product">
                 <ProductOutlined /> Add Product
               </NavLink>

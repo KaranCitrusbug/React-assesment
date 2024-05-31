@@ -1,6 +1,6 @@
 
 import { ProductType } from '../../types/ProductType';
-import { ADD_TO_CART, REMOVE_FROM_CART, INCREASE_QUANTITY, DECREASE_QUANTITY, BUY_NOW_PRODUCT } from '../../types/CartActionType';
+import { ADD_TO_CART, REMOVE_FROM_CART, INCREASE_QUANTITY, DECREASE_QUANTITY, BUY_NOW_PRODUCT, } from '../../types/CartActionType';
 
 // Action creators
 export const addToCart = (product: ProductType) => ({

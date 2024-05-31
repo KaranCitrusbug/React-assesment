@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 
-import { db } from "../../../../firebase"
-import { addDoc, collection } from "firebase/firestore";
-
-import MainHeader from "../../Home/Header/Index";
 import ProductForm from "./ProductForm";
 import ProductListing from "./ProductListing";
+import MainHeader from "../../Home/Header/Index";
 import CustomButton from "../../../UI/Button/Button";
-
-import "./style.css";
 import { ProductType } from "../../../../types/ProductType";
 import { firebaseService } from "../../../../services/FirebaseService";
 
+import "./style.css";
+
 const Index: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-  const productData = collection(db, "products");
+
 
   const handleAddProduct = () => {
     setModalIsOpen(true);

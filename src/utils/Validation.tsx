@@ -1,11 +1,11 @@
 import * as yup from "yup"
-import { ConstValue } from "./ConstFile";
 import isValidPhoneNumber from "libphonenumber-js";
+import { ConstValue } from "./ConstFile";
 
 export const validation = yup.object({
-    userName : yup.string().required("User name is Required").matches(ConstValue.UserName, "User name  must start from alphabetic characters").max(15,"User name is to long").min(2,"User name is to short"),
-    firstName : yup.string().required("First name is Required").max(20,"First name is to long").matches(ConstValue.NameRegex, "First Name must contain only alphabetic characters"),
-    lastName : yup.string().required("Last name is Required").max(15,"Last name is to long").matches(ConstValue.NameRegex, "Last Name must contain only alphabetic characters"),
+    username : yup.string().required("User name is Required").matches(ConstValue.UserName, "User name  must start from alphabetic characters").max(15,"User name is to long").min(2,"User name is to short"),
+    first_name : yup.string().required("First name is Required").max(20,"First name is to long").matches(ConstValue.NameRegex, "First Name must contain only alphabetic characters"),
+    last_name : yup.string().required("Last name is Required").max(15,"Last name is to long").matches(ConstValue.NameRegex, "Last Name must contain only alphabetic characters"),
     email: yup.string().required("Email is Required").matches(ConstValue.EmailRegex,"Please Enter your valid Email"),
     phoneNumber :  yup
     .string()

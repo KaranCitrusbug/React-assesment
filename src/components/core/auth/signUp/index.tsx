@@ -1,20 +1,17 @@
 //  name, email, phone number,  password, and confirm password fields.
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
 
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-
-import PhoneInput from "react-phone-input-2";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../../firebase";
-
+import { Link } from "react-router-dom";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import PhoneInput from "react-phone-input-2";
 import { SignUpProps } from "../../../../types/signUpType";
 import CustomInput from "../../../UI/InputField/input";
 import CustomButton from "../../../UI/Button/Button";
 import images from "../../../../assets/AllImages";
 import { validation } from "../../../../utils/Validation";
+import { registerUser } from "../../../../services/AuthService";
+import { ToastFail } from "../../../../utils/ToastMessage";
 
 import "react-phone-input-2/lib/material.css";
 import "./index.css";
@@ -29,18 +26,17 @@ const Index: React.FC = () => {
     resolver: yupResolver(validation),
     mode: "onChange",
   });
-  const navigate = useNavigate();
+
 
   const onSubmit: SubmitHandler<SignUpProps> = async ({
-    email,
-    password,   
+   ...data
   }) => {
-    createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
-        const user = userCredential.user;
-      }
-    );
-    navigate("/login");
+    try{
+      alert("Please verify your email address to complete the registration process. ")
+      await registerUser(data)
+    }catch(error:any){
+      ToastFail(error)
+    }
   };
   return (
     <div className="center-wrapper">
@@ -61,10 +57,10 @@ const Index: React.FC = () => {
                   register={register}
                   error={errors}
                   className="form-control"
-                  name="userName"
+                  name="username"
                 />
-                {errors.userName && (
-                  <span className="error">{errors.userName.message}</span>
+                {errors.username && (
+                  <span className="error">{errors.username.message}</span>
                 )}
                 <br />
                 <CustomInput
@@ -74,10 +70,10 @@ const Index: React.FC = () => {
                   register={register}
                   error={errors}
                   className="form-control"
-                  name="firstName"
+                  name="first_name"
                 />
-                {errors.firstName && (
-                  <span className="error">{errors.firstName.message}</span>
+                {errors.first_name && (
+                  <span className="error">{errors.first_name.message}</span>
                 )}
                 <br />
                 <CustomInput
@@ -87,10 +83,10 @@ const Index: React.FC = () => {
                   register={register}
                   error={errors}
                   className="form-control"
-                  name="lastName"
+                  name="last_name"
                 />
-                {errors.lastName && (
-                  <span className="error">{errors.lastName.message}</span>
+                {errors.last_name && (
+                  <span className="error">{errors.last_name.message}</span>
                 )}
                 <br />
                 <CustomInput

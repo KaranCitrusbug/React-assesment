@@ -13,6 +13,7 @@
 }
 
 .signUp  .formField{
+    max-width: 600px;
     padding: 10% 10%;
 }
 .custom-button{
