@@ -40,26 +40,9 @@ const Login: React.FC = () => {
         navigate("/");
       },
       (err) => {
-        ToastFail(err.response);
+        ToastFail(err.response.data.message);
       }
     );
-
-    // try {
-    //   const loginCredential = await loginUser(data.email,data.password)
-    //   if(loginCredential.payload.user.is_verified){
-    //     const loginUserDetail = JSON.stringify(loginCredential.payload.tokens)
-    //     dispatch(login(data.email))
-    //     localStorage.setItem("accessToken",loginUserDetail)
-    //     ToastSuccess("Login successfully")
-
-    //     navigate('/')
-    //   }
-    //   else{
-    //     ToastFail("Please verify your email.")
-    //   }
-    // } catch (err) {
-    //   ToastFail("Please check your credential" + err);
-    // }
   };
   const user = localStorage.getItem("accessToken");
 

@@ -26,14 +26,9 @@ export const resetPasswordRequest = async (
   token: string | undefined,
   password: string
 ) => {
-  try {
-    console.log();
     return await api.post(`/reset-forgot-password/${token}/`, {
       password,
-    });
-  } catch (error: any) {
-    throw error;
-  }
+    })
 };
 
 // Login
@@ -58,10 +53,7 @@ export const changePassword = async (
 };
 
 export const userProfile = async () => {
-  try {
-    const user = await api.get("/profile/");
-    return user.data.payload.user;
-  } catch (error: any) {
-    ToastFail("USER NOT FOUND: " + error.message);
-  }
-};
+  
+   return await api.get("/profile/");
+   
+}

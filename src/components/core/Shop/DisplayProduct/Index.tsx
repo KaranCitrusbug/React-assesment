@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import debounce from "lodash.debounce";
-import { Layout, Checkbox, Row, Col, Spin, Pagination, Input } from "antd";
+import { Checkbox, Row, Col,  Pagination, Input } from "antd";
 import Card from "./Card";
 import { firebaseService } from "../../../../services/FirebaseService";
 import { ToastFail } from "../../../../utils/ToastMessage";
@@ -11,7 +11,6 @@ import Loading from "../../../../pages/loading/loading";
 import "./style.css";
 
 
-const { Sider, Content } = Layout;
 const { Search } = Input;
 
 const DisplayProduct: React.FC = () => {

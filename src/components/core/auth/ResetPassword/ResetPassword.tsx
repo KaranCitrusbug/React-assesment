@@ -9,11 +9,13 @@ import CustomInput from "../../../UI/InputField/input";
 import { passwordValidation } from "../../../../utils/Validation";
 import CustomButton from "../../../UI/Button/Button";
 import image from "../../../../assets/AllImages";
+import { useApiCall } from "../../../../services/UseApiCall";
 
 import "./style.css";
 const ResetPassword: React.FC = () => {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
+  const { call } = useApiCall();
   const {
     register,
     handleSubmit,
@@ -21,25 +23,24 @@ const ResetPassword: React.FC = () => {
   } = useForm<{ password: string }>({
     resolver: yupResolver(passwordValidation),
   });
-  const onSubmit: SubmitHandler<{ password: string }> = async (data) => {
-    try {
-      await resetPasswordRequest(token, data.password);
-      ToastSuccess("Password reset successfully");
-      navigate("/login");
-    } catch (error: any) {
-      ToastFail("Failed to reset password" );
-    }
+  const onSubmit: SubmitHandler<{ password: string }> = async ({ ...data }) => {
+    call(
+      () => resetPasswordRequest(token, data.password),
+      () => {
+        ToastSuccess("Password reset successfully");
+        navigate("/login");
+      },
+      (err) => {
+        ToastFail(err.response.data.message);
+      }
+    );
   };
 
   return (
     <div className="center-wrapper">
       <div className="container row w-100 reset-password">
         <div className="col-6">
-          <img
-            src={image.newPassword}
-            alt="password"
-            className="img-fluid"
-          />
+          <img src={image.newPassword} alt="password" className="img-fluid" />
         </div>
         <div className="col-6 px-5">
           <form onClick={handleSubmit(onSubmit)}>

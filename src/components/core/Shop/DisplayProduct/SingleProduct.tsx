@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 import { ThunderboltOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
 import { useDispatch } from "react-redux";
 import MainHeader from "../../../core/Home/Header/Index";
 import Footer from "../../Home/Footer/Index";
@@ -13,6 +12,7 @@ import { ToastFail, ToastSuccess } from "../../../../utils/ToastMessage";
 import { addToCart } from "../../../../store/cartReducer/cartAction";
 
 import "./style.css";
+import Loading from "../../../../pages/loading/loading";
 
 const SingleProduct: React.FC = () => {
   const userId = useParams<string>();
@@ -52,7 +52,7 @@ const SingleProduct: React.FC = () => {
       <MainHeader>
         {loading ? (
           <div className="center-wrapper">
-            <Spin className="loadingProduct" />
+            <Loading/>
           </div>
         ) : (
           <div className="container">

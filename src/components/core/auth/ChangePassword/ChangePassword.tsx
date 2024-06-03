@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { changePassword, forgotPasswordRequest } from "../../../../services/AuthService";
+import {
+  changePassword,
+  forgotPasswordRequest,
+} from "../../../../services/AuthService";
 import { ToastSuccess, ToastFail } from "../../../../utils/ToastMessage";
 import Image from "../../../../assets/AllImages";
 import { resetPassword } from "../../../../utils/Validation";
@@ -13,9 +16,8 @@ import { ChangePasswordProps } from "../../../../types/ChangePasswordType";
 import { useApiCall } from "../../../../services/UseApiCall";
 
 const ChangePassword: React.FC = () => {
-
-  const navigate =useNavigate()
-  const { call } = useApiCall()
+  const navigate = useNavigate();
+  const { call } = useApiCall();
   const {
     register,
     handleSubmit,
@@ -24,20 +26,18 @@ const ChangePassword: React.FC = () => {
     resolver: yupResolver(resetPassword),
   });
 
-  const onSubmit: SubmitHandler<ChangePasswordProps> = async ({...data}) => {
+  const onSubmit: SubmitHandler<ChangePasswordProps> = async ({ ...data }) => {
     call(
-      ()=> changePassword(data.old_password,data.new_password),
-      ()=>{
-        ToastSuccess("Password updated successfully")
-        localStorage.clear(); 
-        navigate(-1)
+      () => changePassword(data.old_password, data.new_password),
+      () => {
+        ToastSuccess("Password updated successfully");
+        localStorage.clear();
+        navigate(-1);
       },
-      (err)=>{
-        console.log(err.response.data.message)
-        ToastFail(err.response.data.message)
+      (err) => {
+        ToastFail(err.response.data.message);
       }
-    )
-
+    );
   };
 
   return (
@@ -48,12 +48,12 @@ const ChangePassword: React.FC = () => {
             src={Image.newPassword}
             alt="frgot-img"
             className="img-fluid"
-            style={{mixBlendMode:"darken"}}
+            style={{ mixBlendMode: "darken" }}
           />
         </div>
         <div className="col-6">
           <form onClick={handleSubmit(onSubmit)}>
-          <CustomInput
+            <CustomInput
               type="password"
               label="Old Password: "
               placeholder="Enter your old Password"
@@ -65,7 +65,7 @@ const ChangePassword: React.FC = () => {
             {errors.old_password && (
               <span className="error">{errors.old_password.message}</span>
             )}
-            <br/>
+            <br />
             <CustomInput
               type="password"
               label="Password: "

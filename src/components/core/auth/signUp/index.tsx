@@ -28,19 +28,21 @@ const Index: React.FC = () => {
     mode: "onChange",
   });
   const { call } = useApiCall();
-  const navigate =useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<SignUpProps> = async ({ ...data }) => {
     call(
       () => registerUser(data),
       () => {
-        ToastSuccess("Verification email sent successfully in this email.please verify");
+        ToastSuccess(
+          "Verification email sent successfully in this email.please verify"
+        );
         navigate("/login");
       },
-      (err) => {              
+      (err) => {
         ToastFail(err.response.data.message);
       }
-    )
+    );
   };
   return (
     <div className="center-wrapper">
