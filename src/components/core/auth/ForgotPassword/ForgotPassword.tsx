@@ -1,16 +1,16 @@
 import React from "react";
 
-import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import { SubmitHandler, useForm } from "react-hook-form";
 import { forgotPasswordRequest } from "../../../../services/AuthService";
 import { ToastSuccess, ToastFail } from "../../../../utils/ToastMessage";
 import Image from "../../../../assets/AllImages";
 import { forgotEmail } from "../../../../utils/Validation";
 import CustomInput from "../../../UI/InputField/input";
 import CustomButton from "../../../UI/Button/Button";
+import { useApiCall } from "../../../../services/UseApiCall";
 
-import './style.css'
+import "./style.css";
 
 const ForgotPassword: React.FC = () => {
   const {
@@ -20,14 +20,20 @@ const ForgotPassword: React.FC = () => {
   } = useForm<{ email: string }>({
     resolver: yupResolver(forgotEmail),
   });
+  const { call } = useApiCall();
 
-  const onSubmit: SubmitHandler<{ email: string }> = async (data) => {
-    try {
-      await forgotPasswordRequest(data.email);
-      ToastSuccess("Password reset email sent successfully,Please cheack your email");
-    } catch (error) {
-      ToastFail("Failed to send password reset email"+error);
-    }
+  const onSubmit: SubmitHandler<{ email: string }> = async ({ ...data }) => {
+    call(
+      () => forgotPasswordRequest(data.email),
+      () => {
+        ToastSuccess(
+          "Password reset email sent successfully,Please check your email"
+        );
+      },
+      (err) => {
+        ToastFail(err.response.data.message);
+      }
+    );
   };
 
   return (
@@ -61,11 +67,7 @@ const ForgotPassword: React.FC = () => {
           </form>
         </div>
         <div className="col-6 forgot-password">
-          <img
-            src={Image.email}
-            alt="frgot-img"
-            className="img-fluid"
-          />
+          <img src={Image.email} alt="forgot-img" className="img-fluid" />
         </div>
       </div>
     </div>

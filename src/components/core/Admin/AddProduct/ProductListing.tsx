@@ -85,7 +85,7 @@ const ProductListing: React.FC = () => {
       dataIndex: "img",
       key: "img",
       render: (text: string) => (
-        <img src={text} alt="product" style={{ width: 50 }} />
+        <img src={text} alt="product" style={{ width: 50 ,mixBlendMode:"darken"}} />
       ),
     },
     {

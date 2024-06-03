@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { changePassword, forgotPasswordRequest } from "../../../../services/AuthService";
 import { ToastSuccess, ToastFail } from "../../../../utils/ToastMessage";
@@ -10,10 +10,12 @@ import { resetPassword } from "../../../../utils/Validation";
 import CustomInput from "../../../UI/InputField/input";
 import CustomButton from "../../../UI/Button/Button";
 import { ChangePasswordProps } from "../../../../types/ChangePasswordType";
+import { useApiCall } from "../../../../services/UseApiCall";
 
 const ChangePassword: React.FC = () => {
 
   const navigate =useNavigate()
+  const { call } = useApiCall()
   const {
     register,
     handleSubmit,
@@ -22,18 +24,20 @@ const ChangePassword: React.FC = () => {
     resolver: yupResolver(resetPassword),
   });
 
-  const onSubmit: SubmitHandler<ChangePasswordProps> = async (data) => {
-    try{
+  const onSubmit: SubmitHandler<ChangePasswordProps> = async ({...data}) => {
+    call(
+      ()=> changePassword(data.old_password,data.new_password),
+      ()=>{
+        ToastSuccess("Password updated successfully")
+        localStorage.clear(); 
+        navigate(-1)
+      },
+      (err)=>{
+        console.log(err.response.data.message)
+        ToastFail(err.response.data.message)
+      }
+    )
 
-      await changePassword(data.old_password,data.new_password)
-      ToastSuccess("Password updated successfully")
-      localStorage.clear(); 
-      navigate(-1)
-      
-    }
-    catch(err){
-      ToastFail("Password not change,try again" + err)
-    }
   };
 
   return (

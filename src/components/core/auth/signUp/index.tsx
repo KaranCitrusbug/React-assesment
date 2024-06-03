@@ -2,7 +2,7 @@
 import React from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import PhoneInput from "react-phone-input-2";
 import { SignUpProps } from "../../../../types/signUpType";
@@ -12,6 +12,7 @@ import images from "../../../../assets/AllImages";
 import { validation } from "../../../../utils/Validation";
 import { registerUser } from "../../../../services/AuthService";
 import { ToastFail, ToastSuccess } from "../../../../utils/ToastMessage";
+import { useApiCall } from "../../../../services/UseApiCall";
 
 import "react-phone-input-2/lib/material.css";
 import "./index.css";
@@ -26,17 +27,20 @@ const Index: React.FC = () => {
     resolver: yupResolver(validation),
     mode: "onChange",
   });
+  const { call } = useApiCall();
+  const navigate =useNavigate()
 
-
-  const onSubmit: SubmitHandler<SignUpProps> = async ({
-   ...data
-  }) => {
-    try{
-      await registerUser(data)
-      ToastSuccess("Please verify your email address to complete the registration process. ")
-    }catch(error:any){
-      ToastFail(error)
-    }
+  const onSubmit: SubmitHandler<SignUpProps> = async ({ ...data }) => {
+    call(
+      () => registerUser(data),
+      () => {
+        ToastSuccess("Verification email sent successfully in this email.please verify");
+        navigate("/login");
+      },
+      (err) => {              
+        ToastFail(err.response.data.message);
+      }
+    )
   };
   return (
     <div className="center-wrapper">

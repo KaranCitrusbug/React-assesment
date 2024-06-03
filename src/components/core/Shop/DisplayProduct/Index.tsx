@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 
+import debounce from "lodash.debounce";
 import { Layout, Checkbox, Row, Col, Spin, Pagination, Input } from "antd";
+import Card from "./Card";
 import { firebaseService } from "../../../../services/FirebaseService";
 import { ToastFail } from "../../../../utils/ToastMessage";
 import { ProductType } from "../../../../types/ProductType";
-import Card from "./Card";
+import Loading from "../../../../pages/loading/loading";
 
 import "./style.css";
+
 
 const { Sider, Content } = Layout;
 const { Search } = Input;
@@ -14,6 +17,7 @@ const { Search } = Input;
 const DisplayProduct: React.FC = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [searchLoading, setSearchLoading] = useState<boolean>(false);
   const [filteredProducts, setFilteredProducts] = useState<ProductType[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -38,10 +42,14 @@ const DisplayProduct: React.FC = () => {
     filterProducts(checkedValues, searchQuery);
   };
 
-  const handleSearch = (value: string) => {
+  const handleSearch = debounce((value: string) => {
+    setSearchLoading(true);
     setSearchQuery(value);
     filterProducts(selectedCategories, value);
-  };
+    setTimeout(() => {
+      setSearchLoading(false);
+    }, 2000);
+  }, 2000);
 
   const filterProducts = (categories: string[], query: string) => {
     let filtered = products;
@@ -52,7 +60,7 @@ const DisplayProduct: React.FC = () => {
     }
     if (query) {
       filtered = filtered.filter((product) =>
-        product.name.toLowerCase().includes(query.toLowerCase())
+        product.category.value.toLowerCase().includes(query.toLowerCase())
       );
     }
     setFilteredProducts(filtered);
@@ -69,7 +77,7 @@ const DisplayProduct: React.FC = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [filteredProducts]);
+  }, []);
 
   useEffect(() => {
     filterProducts(selectedCategories, searchQuery);
@@ -78,57 +86,49 @@ const DisplayProduct: React.FC = () => {
   return (
     <>
       {loading ? (
-        <Spin />
+        <Loading />
       ) : (
-        <Layout style={{ minHeight: "100%" }}>
-          <Layout>
-            <Sider max-width={200} style={{ background: "#fff" }}>
-              <div style={{ padding: "10px" }}>
-                <Search
-                  placeholder="Search products"
-                  onSearch={handleSearch}
-                  enterButton
-                />
-                <h3 className="mt-3">Categories</h3>
-                <Checkbox.Group onChange={handleCategoryChange}>
-                  <Row>
-                    <Col span={24}>
-                      <Checkbox value="Men">Men</Checkbox>
-                    </Col>
-                    <Col span={24}>
-                      <Checkbox value="Women">Women</Checkbox>
-                    </Col>
-                    <Col span={24}>
-                      <Checkbox value="Kid">Kid</Checkbox>
-                    </Col>
-                  </Row>
-                </Checkbox.Group>
-              </div>
-            </Sider>
-            <Layout style={{ padding: "0 24px 24px" }}>
-              <Content
-                style={{
-                  padding: 24,
-                  margin: 0,
-                  minHeight: 280,
+        <div className="row w-100 m-auto">
+          <div className="col-lg-2 lo-md-2 col-sm-2 col-12 " >
+            <div className="ps-2 mt-2">
+              <Search
+                placeholder="Search products"
+                onChange={(e) => {
+                  handleSearch(e.target.value);
                 }}
-              >
-                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-              
-                <Card products={currentProducts} />
-              
-                </div>
-              </Content>
+              />
+              <h6 className="mt-3">Categories</h6>
+              <Checkbox.Group onChange={handleCategoryChange}>
+                <Row>
+                  <Col span={24}>
+                    <Checkbox value="Men">Men</Checkbox>
+                  </Col>
+                  <Col span={24}>
+                    <Checkbox value="Women">Women</Checkbox>
+                  </Col>
+                  <Col span={24}>
+                    <Checkbox value="Kid">Kid</Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            </div>
+          </div>
+          {searchLoading ? (
+            <Loading />
+          ) : (
+            <div className="col-lg-10 col-md-10 col-sm-10 col-12 bg-light">
+              <Card products={currentProducts} />
+
               <Pagination
                 current={currentPage}
                 pageSize={itemsPerPage}
                 total={filteredProducts.length}
                 onChange={handlePageChange}
-                style={{ marginTop: "16px", textAlign: "center" }}
+                className="text-center my-5"
               />
-            </Layout>
-          </Layout>
-        </Layout>
+            </div>
+          )}
+        </div>
       )}
     </>
   );

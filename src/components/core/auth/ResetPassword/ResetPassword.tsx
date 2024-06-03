@@ -1,14 +1,15 @@
 import React from "react";
 
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams } from "react-router-dom";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { resetPasswordRequest } from "../../../../services/AuthService";
 import { ToastSuccess, ToastFail } from "../../../../utils/ToastMessage";
 import CustomInput from "../../../UI/InputField/input";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { passwordValidation } from "../../../../utils/Validation";
 import CustomButton from "../../../UI/Button/Button";
 import image from "../../../../assets/AllImages";
+
 import "./style.css";
 const ResetPassword: React.FC = () => {
   const { token } = useParams<{ token: string }>();
@@ -26,7 +27,7 @@ const ResetPassword: React.FC = () => {
       ToastSuccess("Password reset successfully");
       navigate("/login");
     } catch (error: any) {
-      ToastFail("Failed to reset password" + error.message);
+      ToastFail("Failed to reset password" );
     }
   };
 

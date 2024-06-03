@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface ProductType {
     id: string;
     name: string;
@@ -6,4 +8,5 @@ export interface ProductType {
     description: string;
     price: number;
     quantity: number;
+    createdAt :Timestamp
   }

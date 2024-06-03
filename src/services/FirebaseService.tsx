@@ -1,17 +1,19 @@
 import {
+  Timestamp,
   addDoc,
   collection,
   deleteDoc,
   doc,
   getDoc,
   onSnapshot,
+  orderBy,
   query,
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../firebase";
 import { ProductType } from "../types/ProductType";
 import { ToastFail, ToastSuccess } from "../utils/ToastMessage";
+import { db } from "../firebase";
 
 const Collections = {
   PRODUCTS: "products",
@@ -20,10 +22,11 @@ const Collections = {
 export const firebaseService = {
   fetchProducts: (callback: (products: ProductType[]) => void) => {
     try {
-      const fetchProductsQuery = query(collection(db, Collections.PRODUCTS));
+      const fetchProductsQuery = query(collection(db, Collections.PRODUCTS),orderBy("createdAt","desc"));
       
       onSnapshot(fetchProductsQuery, (snapshot) => {
         let newProduct: ProductType[] = [];
+
         snapshot.docs.forEach((products) => {
           newProduct.push({
             id: products.id,
@@ -33,6 +36,7 @@ export const firebaseService = {
             description: products.data().description,
             price: products.data().price,
             quantity: products.data().quantity,
+            createdAt: products.data().createdAt,  
           });
         });
         callback(newProduct);
@@ -56,6 +60,7 @@ export const firebaseService = {
     await addDoc(collection(db, Collections.PRODUCTS), {
       ...values,
       id: Date.now().toString(),
+      createdAt: Timestamp.now()
     });
   },
   editProductData: async (values: ProductType, productId: string) => {
@@ -89,6 +94,7 @@ export const firebaseService = {
             description: products.data().description,
             price: products.data().price,
             quantity: products.data().quantity,
+            createdAt: products.data().createdAt,
           });
           callback(relatedProductsData)
         });
