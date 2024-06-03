@@ -87,7 +87,7 @@ const DisplayProduct: React.FC = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div className="row w-100 m-auto">
+        <div className="row w-100 m-auto" style={{minHeight:"70vh"}}>
           <div className="col-lg-2 lo-md-2 col-sm-2 col-12 " >
             <div className="ps-2 mt-2">
               <Search
@@ -112,10 +112,10 @@ const DisplayProduct: React.FC = () => {
               </Checkbox.Group>
             </div>
           </div>
+          <div className="col-lg-10 col-md-10 col-sm-10 col-12 bg-light">
           {searchLoading ? (
             <Loading />
-          ) : (
-            <div className="col-lg-10 col-md-10 col-sm-10 col-12 bg-light">
+          ) : (<>
               <Card products={currentProducts} />
 
               <Pagination
@@ -124,9 +124,10 @@ const DisplayProduct: React.FC = () => {
                 total={filteredProducts.length}
                 onChange={handlePageChange}
                 className="text-center my-5"
-              />
+                />
+                </>
+            )}
             </div>
-          )}
         </div>
       )}
     </>
