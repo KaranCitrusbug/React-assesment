@@ -1,12 +1,9 @@
-import React from "react";
-
+import React, { useEffect } from "react";
 
 import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCartShopping,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,22 +18,23 @@ import { RootState } from "../../../../types/StateType";
 import { HeaderProps } from "../../../../types/Headerprops";
 import { ConstValue } from "../../../../utils/ConstFile";
 import { ToastFail } from "../../../../utils/ToastMessage";
-import { logout } from "../../../../store/AuthReducer/authAction";
+import { login,logout } from "../../../../store/AuthReducer/authAction";
 
 import "./style.css";
 
-
 const Index: React.FC<HeaderProps> = ({ children }) => {
-
   const navigate = useNavigate();
-  const loginUser = useSelector((state:RootState ) => state.auth)
-console.log(loginUser.isUserLoggedIn)
-  const cartItem = useSelector((state: RootState) => state.cart.cart)
-  const dispatch = useDispatch()
+  let loginUserState = useSelector((state: RootState) => state.auth.isUserLoggedIn);
+  let loginUserEmail = useSelector((state: RootState) => state.auth.user);
+  const cartItem = useSelector((state: RootState) => state.cart.cart);
+  const dispatch = useDispatch();
+  const user = localStorage.getItem("accessToken")
+  
   const handleSignOut = async () => {
     try {
-      dispatch(logout())
-    } catch (error : any) {
+      localStorage.clear()
+      dispatch(logout());
+    } catch (error: any) {
       ToastFail("Error signing out:" + error);
     }
   };
@@ -48,8 +46,8 @@ console.log(loginUser.isUserLoggedIn)
     {
       key: "1",
       label: (
-        <Link rel="noopener noreferrer" to="/profile" className="btn">
-         Profile
+        <Link  to="/profile" className="btn">
+          Profile
         </Link>
       ),
     },
@@ -68,21 +66,25 @@ console.log(loginUser.isUserLoggedIn)
         <CustomButton
           type="button"
           className="btn"
-          buttonLabel={loginUser.isUserLoggedIn ? "Logout" : "Login"}
+          buttonLabel={loginUserState ? "Logout" : "Login"}
           id="button"
-          onClick={loginUser.isUserLoggedIn ? handleSignOut : handleSignIn}
+          onClick={loginUserState ? handleSignOut : handleSignIn}
         />
       ),
     },
   ];
 
-
+  useEffect(()=>{
+    if(user){
+      dispatch(login(loginUserEmail!))
+    }
+  }
+)
 
   return (
     <>
       <nav className="navbar navbar-expand-lg sticky-top  z-3">
         <div className="container d-flex justify-content-between">
-          
           <NavLink className="navbar-brand text-decoration-none" to="/">
             <div className="logo d-flex justify-content-center align-center">
               <img
@@ -104,7 +106,10 @@ console.log(loginUser.isUserLoggedIn)
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+          <div
+            className="collapse navbar-collapse justify-content-center"
+            id="navbarSupportedContent"
+          >
             <NavLink to="/">
               <HomeOutlined /> Home
             </NavLink>
@@ -112,15 +117,13 @@ console.log(loginUser.isUserLoggedIn)
             <NavLink to="/shop">
               <ShoppingOutlined /> Shop
             </NavLink>
-            {loginUser && loginUser.user === ConstValue.Admin ? (
+            { loginUserEmail === ConstValue.Admin ?
               <NavLink to="/admin/add-product">
                 <ProductOutlined /> Add Product
-              </NavLink>
-            ) : (
-              ""
-            )}
+              </NavLink> : ""
+            }
 
-            <NavLink to="/blog">Feedback</NavLink>
+            <NavLink to="/feedback">Feedback</NavLink>
             <NavLink to="/about">About Us</NavLink>
           </div>
           <div className="d-flex cart-and-user">
@@ -148,7 +151,6 @@ console.log(loginUser.isUserLoggedIn)
               </a>
             </Dropdown>
           </div>
-          
         </div>
       </nav>
       <main>{children}</main>

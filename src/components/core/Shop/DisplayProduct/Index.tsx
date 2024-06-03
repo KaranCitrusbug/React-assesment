@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import { Layout, Checkbox, Row, Col, Spin, Pagination, Input } from "antd";
-
 import { firebaseService } from "../../../../services/FirebaseService";
 import { ToastFail } from "../../../../utils/ToastMessage";
 import { ProductType } from "../../../../types/ProductType";
@@ -70,7 +69,7 @@ const DisplayProduct: React.FC = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [filteredProducts]);
 
   useEffect(() => {
     filterProducts(selectedCategories, searchQuery);
@@ -115,7 +114,9 @@ const DisplayProduct: React.FC = () => {
                 }}
               >
                 <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-                  <Card products={currentProducts} />
+              
+                <Card products={currentProducts} />
+              
                 </div>
               </Content>
               <Pagination

@@ -37,7 +37,7 @@ const Index: React.FC = () => {
                   Missing your Cart Item?
                 </h2>
                 <p className="text-center">Login to see the items you added previously</p>
-                <button className="btn btn-primary m-auto" onClick={handleLogin}>
+                <button className="btn custom-button m-auto" onClick={handleLogin}>
                   Login
                 </button>
               </div>

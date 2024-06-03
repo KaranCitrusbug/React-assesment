@@ -15,6 +15,7 @@ const SingleProduct = lazy(()=> import('../pages/SingleProduct/Index'))
 const ProfilePage = lazy(()=> import('../pages/Profile/Index'))
 const TokenComponent = lazy(() => import('../components/core/auth/AuthToken'))
 const ForgotPassword = lazy(() => import('../pages/ForgotPassword/Index') )
+const ResetPassword = lazy(()=> import('../pages/ResetPassword/Index'))
 const ChangePassword = lazy(()=> import('../pages/ChangePassword/Index'))
 
 const RoutesPage:React.FC = () => {
@@ -27,9 +28,10 @@ const RoutesPage:React.FC = () => {
             <Route  path='/signup' Component={SignUp}></Route>
             <Route  path='/invited/signup/:token' Component={TokenComponent}></Route>
             <Route  path='/forgotPassword' Component={ForgotPassword}></Route>
-            <Route  path='/reset/password/:token' Component={ChangePassword}></Route>
+            <Route  path='/reset/password/:token' Component={ResetPassword}></Route>
+            <Route  path='/changePassword' Component={ChangePassword}></Route>
             <Route path='/cart' Component={Cart}></Route>
-            <Route path='/blog' Component={Blogs}></Route>
+            <Route path='/feedback' Component={Blogs}></Route>
             <Route path='/shop' Component={Shop}></Route>
             <Route path="shop/:id" Component={SingleProduct}></Route>
             <Route path="/profile" Component={ProfilePage}></Route>

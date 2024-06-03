@@ -1,6 +1,6 @@
 import { SignUpProps } from "../types/signUpType";
 import { ToastFail } from "../utils/ToastMessage";
-import api, { noAuthApi } from "../components/core/api/ApiURL";
+import api, { noAuthApi } from "../api/ApiURL";
 
 // Register User
 export const registerUser = async (userData: SignUpProps) => {
@@ -8,15 +8,15 @@ export const registerUser = async (userData: SignUpProps) => {
     const response = await noAuthApi.post("/register/", userData);
     return response.data;
   } catch (error:any) {
-   ToastFail(error);
+   ToastFail("Something went wrong" + error.message);
   }
 };
 export const VerifyToken = async (token: string | undefined) => {
   try {
     const authToken = await api.post(`verify-user/${token}/`);
     return authToken.data;
-  } catch (error) {
-   ToastFail("Error registering user:" + error);
+  } catch (error:any) {
+   ToastFail("Error registering user:" + error.message);
     throw error;
   }
 };
@@ -27,8 +27,8 @@ export const forgotPasswordRequest = async (email: string) => {
      return await noAuthApi.post("/forgot-password-request/", { email });
   
     
-  } catch (error) {
-   ToastFail("Error requesting password reset:"+ error);
+  } catch (error:any) {
+   ToastFail("Error requesting password reset:"+ error.message);
     throw error;
   }
 };
@@ -36,15 +36,16 @@ export const forgotPasswordRequest = async (email: string) => {
 // Reset Password Request
 export const resetPasswordRequest = async (
   token: string | undefined,
-  newPassword: string
+  password: string
 ) => {
   try {
-    const response = await api.post(`/reset-forgot-password/${token}`, {
-      newPassword,
+    console.log()
+    return await api.post(`/reset-forgot-password/${token}/`, {
+      password,
     });
-    return response.data;
-  } catch (error) {
-   ToastFail("Error resetting password:"+ error);
+   
+  } catch (error:any) {
+   ToastFail("Error resetting password:"+ error.message);
     throw error;
   }
 };
@@ -62,17 +63,27 @@ export const loginUser = async (email: string, password: string) => {
 
 // Change Password
 export const changePassword = async (
-  currentPassword: string,
-  newPassword: string
+  old_password: string,
+  new_password: string
 ) => {
   try {
     const response = await api.post("/reset-password/", {
-      currentPassword,
-      newPassword,
+      old_password,
+      new_password,
     });
     return response.data;
-  } catch (error) {
-   ToastFail("Error changing password:" + error);
+  } catch (error:any) {
+   ToastFail("Error changing password:" + error.message);
     throw error;
   }
 };
+
+export const userProfile = async () =>{
+  try{
+    const user = await api.get("/profile/")
+    return user.data.payload.user
+  }
+  catch (error:any) {
+    ToastFail("USER NOT FOUND: " + error.message);
+  }
+}

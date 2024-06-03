@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { Carousel } from 'react-responsive-carousel'
-
 import images from '../../../../assets/AllImages'
 
 import './style.css'
@@ -19,10 +18,10 @@ const Index : React.FC= () => {
       interval={4000}
       >
         {
-            carouselImage.map((img, index) => {
+            carouselImage.map((imgs, index) => {
                 return (
                     <div key={index}>
-                        <img src={img}  alt='carousel Image' className='img-fluid carousel-img'/>
+                        <img src={imgs}  alt='carousel Image' className='img-fluid carousel-img'/>
                     </div>
                 )
             })

@@ -1,5 +1,3 @@
-import { loginProps } from "./loginType";
-
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Button, Popconfirm, Spin, Table, TableColumnsType } from "antd";
-
 import ProductForm from "./ProductForm";
-
 import { ProductType } from "../../../../types/ProductType";
 import { firebaseService } from "../../../../services/FirebaseService";
 

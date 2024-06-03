@@ -1,9 +1,9 @@
 import React from 'react'
-import ResetPassword from '../../components/core/auth/ChangePassword/ResetPassword'
+import ChangePassword from '../../components/core/auth/ChangePassword/ChangePassword'
 
-const Index = () => {
+const Index :React.FC= () => {
   return (
-    <ResetPassword/>
+    <ChangePassword/>
   )
 }
 

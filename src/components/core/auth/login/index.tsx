@@ -31,27 +31,29 @@ const Login: React.FC = () => {
   const onSubmit: SubmitHandler<loginProps> = async (data) => {
     try {
       const loginCredential = await loginUser(data.email,data.password)
-      const loginUserDetail = JSON.stringify(loginCredential.payload.tokens)
-      dispatch(login(data.email))
-      localStorage.setItem("accessToken",loginUserDetail)
-      ToastSuccess("Login successfully")
-      
-      navigate('/')
-  
+      if(loginCredential.payload.user.is_verified){
+        const loginUserDetail = JSON.stringify(loginCredential.payload.tokens)
+        dispatch(login(data.email))
+        localStorage.setItem("accessToken",loginUserDetail)
+        ToastSuccess("Login successfully")
+        
+        navigate('/')
+      }
+      else{
+        ToastFail("Please verify your email.")
+      }
     } catch (err) {
       ToastFail("Please check your credential" + err);
     }
   };
+  const user = localStorage.getItem("accessToken")
 
  useEffect(()=>{
-  const user = localStorage.getItem("accessToken")
   if(user){
-    navigate('/')
     ToastSuccess("You are already logged in")
+    navigate('/')
   }
-
-
- },[])
+ },[user])
 
   return (
     <div className="center-wrapper">

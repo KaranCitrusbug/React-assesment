@@ -24,3 +24,19 @@ export const loginValidation = yup.object({
     email: yup.string().required("Email is Required"),
     password : yup.string().required("Password is Required")
 })
+
+export const passwordValidation = yup.object({
+  password : yup.string().required("Password is Required").min(8,"Your Password must be at least 8 character").max(14,"Your Password must be up to 14 character").matches(ConstValue.PasswordRegex,"Password contain at least one uppercase, one lowercase, one number and one special character")
+})
+
+export const resetPassword = yup.object({
+  old_password: yup.string().required("Old password is Required"),
+  new_password : yup.string().required("New Password is Required").min(8,"Your Password must be at least 8 character").max(14,"Your Password must be up to 14 character").matches(ConstValue.PasswordRegex,"Password contain at least one uppercase, one lowercase, one number and one special character"),
+  confirmPassword : yup.string().required("confirmPassword is Required").oneOf([yup.ref('new_password')], 'Passwords must match'),
+
+})
+
+
+export const forgotEmail  = yup.object({
+  email: yup.string().required("Email is Required")
+})

@@ -7,6 +7,10 @@ import Carousel1 from "./image/carousel1.jpg"
 import Carousel2 from "./image/carousel2.jpg"
 import Carousel3 from "./image/carousel3.jpg"
 import heroImg from "./image/hero.png"
+import newPassword from "./image/new_password.png"
+import forgotPassword from "./image/forgot_password.png"
+import email from "./image/email.png"
+import user from "./image/user.png"
 
 const AllImages ={
     PageNotFoundImage,
@@ -18,6 +22,10 @@ const AllImages ={
     Carousel2,
     Carousel3,
     heroImg,
+    newPassword,
+    forgotPassword,
+    email,
+    user
 }
 
 export default AllImages

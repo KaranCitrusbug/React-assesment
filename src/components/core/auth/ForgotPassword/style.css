@@ -1,0 +1,7 @@
+.forgot-password img{
+    mix-blend-mode: darken;
+}
+.forgot-password p{
+    font-size: 20px;
+    line-height: 22px;
+}

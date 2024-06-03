@@ -12,11 +12,11 @@
     gap: 10px;
 }
 
-.signUp  .formField{
+.signUp .formField{
     max-width: 600px;
     padding: 10% 10%;
 }
-.custom-button{
+.signUp .custom-button{
     width: 100%;
 }
 .signUpImg{

@@ -21,6 +21,7 @@ export const firebaseService = {
   fetchProducts: (callback: (products: ProductType[]) => void) => {
     try {
       const fetchProductsQuery = query(collection(db, Collections.PRODUCTS));
+      
       onSnapshot(fetchProductsQuery, (snapshot) => {
         let newProduct: ProductType[] = [];
         snapshot.docs.forEach((products) => {
@@ -37,7 +38,7 @@ export const firebaseService = {
         callback(newProduct);
       });
     } catch (error: any) {
-      ToastFail("Error fetching products: " + error.message);
+      ToastFail("Error fetching products: " + error);
     }
   },
 

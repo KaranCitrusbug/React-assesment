@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
-
 import axios from "axios";
-
 import { Spin } from "antd";
 
 import "./style.css";
@@ -42,7 +40,7 @@ const PostList: React.FC = () => {
         dataLength={posts.length}
         next={fetchPosts}
         hasMore={hasMore}
-        loader={<Spin  className="text-center" />}
+        loader={<Spin />}
         endMessage={<p>No more posts to show.</p>}
       >
         {posts.map((post, index) => (

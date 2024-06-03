@@ -21,10 +21,10 @@ const Footer : React.FC= () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/ahop">Shop</Link>
+              <Link to="/shop">Shop</Link>
             </li>
             <li>
-              <Link to="/blog">Feedback</Link>
+              <Link to="/feedback">Feedback</Link>
             </li>
             <li>
               <Link to="/about">About Us</Link>

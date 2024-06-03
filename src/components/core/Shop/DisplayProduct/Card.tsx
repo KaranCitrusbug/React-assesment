@@ -1,13 +1,12 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import { ShoppingCartOutlined, ThunderboltOutlined } from "@ant-design/icons";
 
 import { ProductType } from "../../../../types/ProductType";
 import { RootState } from "../../../../types/StateType";
 import { addToCart } from "../../../../store/cartReducer/cartAction";
-
 import { CardProps } from "../../../../types/CartProductProps";
 import { ToastSuccess } from "../../../../utils/ToastMessage";
 
@@ -23,6 +22,7 @@ const Card: React.FC<CardProps> = ({ products }) => {
 
   return (
     <>
+    
       {products.length !== 0 ? (
         products.map((product) => {
           const cartDetail = cartItem.find((item) => item.id === product.id);

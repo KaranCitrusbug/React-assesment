@@ -11,7 +11,7 @@ import CustomButton from "../../../UI/Button/Button";
 import images from "../../../../assets/AllImages";
 import { validation } from "../../../../utils/Validation";
 import { registerUser } from "../../../../services/AuthService";
-import { ToastFail } from "../../../../utils/ToastMessage";
+import { ToastFail, ToastSuccess } from "../../../../utils/ToastMessage";
 
 import "react-phone-input-2/lib/material.css";
 import "./index.css";
@@ -32,8 +32,8 @@ const Index: React.FC = () => {
    ...data
   }) => {
     try{
-      alert("Please verify your email address to complete the registration process. ")
       await registerUser(data)
+      ToastSuccess("Please verify your email address to complete the registration process. ")
     }catch(error:any){
       ToastFail(error)
     }
