@@ -18,21 +18,23 @@ import { RootState } from "../../../../types/StateType";
 import { HeaderProps } from "../../../../types/Headerprops";
 import { ConstValue } from "../../../../utils/ConstFile";
 import { ToastFail } from "../../../../utils/ToastMessage";
-import { login,logout } from "../../../../store/AuthReducer/authAction";
+import { login, logout } from "../../../../store/AuthReducer/authAction";
 
 import "./style.css";
 
 const Index: React.FC<HeaderProps> = ({ children }) => {
   const navigate = useNavigate();
-  let loginUserState = useSelector((state: RootState) => state.auth.isUserLoggedIn);
+  let loginUserState = useSelector(
+    (state: RootState) => state.auth.isUserLoggedIn
+  );
   let loginUserEmail = useSelector((state: RootState) => state.auth.user);
   const cartItem = useSelector((state: RootState) => state.cart.cart);
   const dispatch = useDispatch();
-  const user = localStorage.getItem("accessToken")
-  
+  const user = localStorage.getItem("accessToken");
+
   const handleSignOut = async () => {
     try {
-      localStorage.clear()
+      localStorage.clear();
       dispatch(logout());
     } catch (error: any) {
       ToastFail("Error signing out:" + error);
@@ -46,7 +48,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
     {
       key: "1",
       label: (
-        <Link  to="/profile" className="btn">
+        <Link to="/profile" className="btn">
           Profile
         </Link>
       ),
@@ -74,12 +76,11 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
     },
   ];
 
-  useEffect(()=>{
-    if(user){
-      dispatch(login(loginUserEmail!))
+  useEffect(() => {
+    if (user) {
+      dispatch(login(loginUserEmail!));
     }
-  }
-)
+  });
 
   return (
     <>
@@ -117,11 +118,13 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
             <NavLink to="/shop">
               <ShoppingOutlined /> Shop
             </NavLink>
-            { loginUserEmail === ConstValue.Admin ?
+            {loginUserEmail === ConstValue.Admin ? (
               <NavLink to="/admin/add-product">
                 <ProductOutlined /> Add Product
-              </NavLink> : ""
-            }
+              </NavLink>
+            ) : (
+              ""
+            )}
 
             <NavLink to="/feedback">Feedback</NavLink>
             <NavLink to="/about">About Us</NavLink>
@@ -131,7 +134,7 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
               <button
                 type="button"
                 className="btn position-relative"
-                style={{background:"#a2d2ff"}}
+                style={{ background: "#a2d2ff" }}
               >
                 <div className="d-flex px-1 py-1 ">
                   <FontAwesomeIcon icon={faCartShopping} />

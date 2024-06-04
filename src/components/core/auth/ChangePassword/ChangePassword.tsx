@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
   changePassword,
-  forgotPasswordRequest,
 } from "../../../../services/AuthService";
 import { ToastSuccess, ToastFail } from "../../../../utils/ToastMessage";
 import Image from "../../../../assets/AllImages";
@@ -46,7 +45,7 @@ const ChangePassword: React.FC = () => {
         <div className="col-6">
           <img
             src={Image.newPassword}
-            alt="frgot-img"
+            alt="forgot-img"
             className="img-fluid"
             style={{ mixBlendMode: "darken" }}
           />

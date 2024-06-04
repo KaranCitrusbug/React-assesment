@@ -19,7 +19,7 @@ const SingleProduct: React.FC = () => {
   const [singleProduct, setSingleProduct] = useState<ProductType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [relatedProducts, setRelatedProducts] = useState<ProductType[]>([]);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   async function getData(id: string | undefined) {
     try {
@@ -40,10 +40,10 @@ const SingleProduct: React.FC = () => {
       setLoading(false);
     }
   }
-  const handleProduct= (singleProduct : ProductType)=>{
-    dispatch(addToCart(singleProduct))
-    ToastSuccess("Product added successfully")
-  }
+  const handleProduct = (singleProduct: ProductType) => {
+    dispatch(addToCart(singleProduct));
+    ToastSuccess("Product added successfully");
+  };
   useEffect(() => {
     getData(userId.id);
   }, [userId]);
@@ -52,7 +52,7 @@ const SingleProduct: React.FC = () => {
       <MainHeader>
         {loading ? (
           <div className="center-wrapper">
-            <Loading/>
+            <Loading />
           </div>
         ) : (
           <div className="container">
@@ -70,7 +70,10 @@ const SingleProduct: React.FC = () => {
                     <ThunderboltOutlined />
                     BUY NOW
                   </button>
-                  <button className="btn btn-secondary flex-grow-1" onClick={()=>handleProduct(singleProduct!)}>
+                  <button
+                    className="btn btn-secondary flex-grow-1"
+                    onClick={() => handleProduct(singleProduct!)}
+                  >
                     <ThunderboltOutlined />
                     ADD TO CART
                   </button>
@@ -95,15 +98,12 @@ const SingleProduct: React.FC = () => {
               </div>
             </div>
             <div className="mb-5">
-            <h2 className="mb-5">You might be interested in</h2>
-            {relatedProducts.length !== 0 ? (
-             
-
+              <h2 className="mb-5">You might be interested in</h2>
+              {relatedProducts.length !== 0 ? (
                 <Card products={relatedProducts} />
-            
-            ) : (
-              ""
-            )}
+              ) : (
+                ""
+              )}
             </div>
           </div>
         )}

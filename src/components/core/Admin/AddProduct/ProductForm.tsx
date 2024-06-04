@@ -25,8 +25,7 @@ const ProductForm: React.FC<ProductFromProps> = ({
 }) => {
   const [selectedOption, setSelectedOption] =
     useState<SingleValue<{ value: string; label: string }>>(null);
-    const [imageUrl, setImageUrl] = useState<string | null>(null);
-    
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const [form] = Form.useForm();
 
@@ -50,13 +49,13 @@ const ProductForm: React.FC<ProductFromProps> = ({
     return new Promise((resolve, reject) => {
       const storageRef = ref(storage, `images/${file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
-      console.log(uploadTask)
-  
+      console.log(uploadTask);
+
       uploadTask.on(
         "state_changed",
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         },
         (error) => {
           ToastFail("Upload failed");
@@ -83,33 +82,39 @@ const ProductForm: React.FC<ProductFromProps> = ({
       ToastFail("Image upload failed");
     }
   };
-  const handleAddFinish = () =>{
-    form.validateFields().then((values: ProductType) => {
-      if (imageUrl) {
-        values.img = imageUrl; 
-      }
-      onSubmit(values);
-      form.resetFields();
-      setSelectedOption(null);
-      handleOk();
-    }).catch((info:string) => {
-      ToastFail(info);
-    });
-  }
+  const handleAddFinish = () => {
+    form
+      .validateFields()
+      .then((values: ProductType) => {
+        if (imageUrl) {
+          values.img = imageUrl;
+        }
+        onSubmit(values);
+        form.resetFields();
+        setSelectedOption(null);
+        handleOk();
+      })
+      .catch((info: string) => {
+        ToastFail(info);
+      });
+  };
 
   const handleFinish = () => {
-    form.validateFields().then((values : ProductType) => {
-      if (imageUrl) {
-        values.img = imageUrl; 
-      }
-      onSubmit(values);
-      setSelectedOption(null);
-      handleOk();
-    }).catch((info) => {
-      ToastFail(info);
-    });
+    form
+      .validateFields()
+      .then((values: ProductType) => {
+        if (imageUrl) {
+          values.img = imageUrl;
+        }
+        onSubmit(values);
+        setSelectedOption(null);
+        handleOk();
+      })
+      .catch((info) => {
+        ToastFail(info);
+      });
   };
- 
+
   useEffect(() => {
     if (initialValue) {
       const selectedCategory = Option.find(
@@ -167,21 +172,21 @@ const ProductForm: React.FC<ProductFromProps> = ({
           <Input />
         </Form.Item> */}
         <Form.Item
-        label="Image"
-        name="img"
-        rules={[{ required: true, message: 'Image is required' }]}
-      >
-        <Upload
-          beforeUpload={handleImageUpload}
-          listType="picture-card"
-          maxCount={1}
+          label="Image"
+          name="img"
+          rules={[{ required: true, message: "Image is required" }]}
         >
-          <button style={{ border: 0, background: 'none' }} type="button">
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
-          </button>
-        </Upload>
-      </Form.Item>
+          <Upload
+            beforeUpload={handleImageUpload}
+            listType="picture-card"
+            maxCount={1}
+          >
+            <button style={{ border: 0, background: "none" }} type="button">
+              <PlusOutlined />
+              <div style={{ marginTop: 8 }}>Upload</div>
+            </button>
+          </Upload>
+        </Form.Item>
         <Form.Item
           name="price"
           label="Product Price:"
