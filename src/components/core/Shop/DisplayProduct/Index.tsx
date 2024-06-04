@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import debounce from "lodash.debounce";
-import { Checkbox, Row, Col,  Pagination, Input } from "antd";
+import { Checkbox, Row, Col, Pagination, Input } from "antd";
 import Card from "./Card";
 import { firebaseService } from "../../../../services/FirebaseService";
 import { ToastFail } from "../../../../utils/ToastMessage";
@@ -9,7 +9,6 @@ import { ProductType } from "../../../../types/ProductType";
 import Loading from "../../../../pages/loading/loading";
 
 import "./style.css";
-
 
 const { Search } = Input;
 
@@ -47,8 +46,8 @@ const DisplayProduct: React.FC = () => {
     filterProducts(selectedCategories, value);
     setTimeout(() => {
       setSearchLoading(false);
-    }, 2000);
-  }, 2000);
+    }, 1500);
+  }, 1500);
 
   const filterProducts = (categories: string[], query: string) => {
     let filtered = products;
@@ -87,8 +86,8 @@ const DisplayProduct: React.FC = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div className="row w-100 m-auto" style={{minHeight:"70vh"}}>
-          <div className="col-lg-2 lo-md-2 col-sm-2 col-12 " >
+        <div className="row w-100 m-auto" style={{ minHeight: "70vh" }}>
+          <div className="col-lg-2 lo-md-2 col-sm-2 col-12 ">
             <div className="ps-2 mt-2">
               <Search
                 placeholder="Search products"
@@ -113,21 +112,22 @@ const DisplayProduct: React.FC = () => {
             </div>
           </div>
           <div className="col-lg-10 col-md-10 col-sm-10 col-12 bg-light">
-          {searchLoading ? (
-            <Loading />
-          ) : (<>
-              <Card products={currentProducts} />
+            {searchLoading ? (
+              <Loading />
+            ) : (
+              <>
+                <Card products={currentProducts} />
 
-              <Pagination
-                current={currentPage}
-                pageSize={itemsPerPage}
-                total={filteredProducts.length}
-                onChange={handlePageChange}
-                className="text-center my-5"
+                <Pagination
+                  current={currentPage}
+                  pageSize={itemsPerPage}
+                  total={filteredProducts.length}
+                  onChange={handlePageChange}
+                  className="text-center my-5"
                 />
-                </>
+              </>
             )}
-            </div>
+          </div>
         </div>
       )}
     </>

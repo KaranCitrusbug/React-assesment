@@ -52,7 +52,7 @@ const ChangePassword: React.FC = () => {
           />
         </div>
         <div className="col-6">
-          <form onClick={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <CustomInput
               type="password"
               label="Old Password: "

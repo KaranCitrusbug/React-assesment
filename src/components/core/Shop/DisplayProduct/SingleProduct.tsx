@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import { ThunderboltOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
+import { ThunderboltOutlined } from "@ant-design/icons";
+import Card from "./Card";
 import MainHeader from "../../../core/Home/Header/Index";
 import Footer from "../../Home/Footer/Index";
-import Card from "./Card";
 import { ProductType } from "../../../../types/ProductType";
 import { firebaseService } from "../../../../services/FirebaseService";
 import { ToastFail, ToastSuccess } from "../../../../utils/ToastMessage";
 import { addToCart } from "../../../../store/cartReducer/cartAction";
+import Loading from "../../../../pages/loading/loading";
 
 import "./style.css";
-import Loading from "../../../../pages/loading/loading";
 
 const SingleProduct: React.FC = () => {
   const userId = useParams<string>();
@@ -94,14 +94,17 @@ const SingleProduct: React.FC = () => {
                 )}
               </div>
             </div>
+            <div className="mb-5">
             <h2 className="mb-5">You might be interested in</h2>
             {relatedProducts.length !== 0 ? (
-              <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 mb-5">
+             
+
                 <Card products={relatedProducts} />
-              </div>
+            
             ) : (
               ""
             )}
+            </div>
           </div>
         )}
       </MainHeader>

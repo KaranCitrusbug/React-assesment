@@ -19,13 +19,11 @@ const Protected: FC<ProtectedProps> = ({ children, isAuthRequired = true }) => {
     setIsLoading(true);
     if (isAuthRequired && !isAuthenticated) {
       navigate("/login");
-    } else if (!isAuthRequired && isAuthenticated) {
-      navigate("/");
     }
     setIsLoading(false);
   }, [isAuthenticated, isAuthRequired]);
 
-  return isLoading ? <Loading/> : <>{children}</>;
+  return isLoading ? <Loading /> : <>{children}</>;
 };
 
 export default Protected;

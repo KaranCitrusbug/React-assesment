@@ -130,7 +130,8 @@ const Index: React.FC<HeaderProps> = ({ children }) => {
             <Link to="/cart" className="ps-3">
               <button
                 type="button"
-                className="btn btn-warning position-relative"
+                className="btn position-relative"
+                style={{background:"#a2d2ff"}}
               >
                 <div className="d-flex px-1 py-1 ">
                   <FontAwesomeIcon icon={faCartShopping} />

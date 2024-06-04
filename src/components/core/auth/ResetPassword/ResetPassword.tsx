@@ -43,7 +43,7 @@ const ResetPassword: React.FC = () => {
           <img src={image.newPassword} alt="password" className="img-fluid" />
         </div>
         <div className="col-6 px-5">
-          <form onClick={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <CustomInput
               label="Enter your new Password: "
               type="password"

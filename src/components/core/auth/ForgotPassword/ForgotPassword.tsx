@@ -43,7 +43,7 @@ const ForgotPassword: React.FC = () => {
           <p className="m-0 pb-3">
             Enter your emai and we'll send you a link to reset your password.
           </p>
-          <form onClick={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <CustomInput
               label="Email: "
               type="email"
